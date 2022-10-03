@@ -5,7 +5,9 @@ let intervalId;
 function startGame() {
 	intervalId = setInterval(checkEndGame, 500);
 	if (computerScore.textContent === '0' || playerScore.textContent === '0') {
+		// console.log('ervenyesulok?');
 		playNewGame.display = 'none';
+		playOutcome.style.fontSize = '1rem';
 	}
 }
 
@@ -167,7 +169,7 @@ computerScore.textContent = 0;
 playerScore.textContent = 0;
 computerName.textContent = 'Computer';
 // playerName.textContent = prompt(`What's your name?`);
-playerName.textContent = 'You';
+// playerName.textContent = 'You';
 resultsText.textContent = 'Results';
 title.textContent = 'New game:';
 desc.textContent = 'Win 5 to win the game!';

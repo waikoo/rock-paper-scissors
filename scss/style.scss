@@ -1,0 +1,22 @@
+$bg: #141412;
+$green: #72e6a6;
+
+.visible {
+	display: block;
+}
+
+.invisible {
+	display: none;
+}
+
+.name-btn {
+	display: block;
+}
+
+dialog {
+	display: block;
+}
+
+dialog::backdrop {
+	background: rgba(0, 0, 0, 0.236);
+}

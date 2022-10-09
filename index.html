@@ -11,17 +11,76 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   />
+  <script
+    src="app.js"
+    type="module"
+    defer
+  ></script>
   <link
     rel="stylesheet"
-    href="style.css"
+    href="css/style.css"
   />
-  <title></title>
+  <title>Rock, Paper, Scissors</title>
 </head>
 
 <body>
+  <main>
+    <!-- ! get name -->
+    <form id="form-name">
+      <label
+        for="name"
+        class="name-question"
+      >Enter your name</label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        maxlength="8"
+      >
+      <small>Maximum 8 Characters</small>
+      <button id="name-btn">Next</button>
+    </form>
 
+    <!-- ! get color -->
+    <form
+      id="form-color"
+      class="invisible"
+    >
+      <label
+        for="name"
+        class="name-question"
+      >Choose Your Color</label>
+      <div class="color-con">
+        <img
+          src="https://picsum.photos/50"
+          alt="red"
+          data-color="red"
+        >
+        <img
+          src="https://picsum.photos/50"
+          alt="yellow"
+          data-color="yellow"
+        >
+        <img
+          src="https://picsum.photos/50"
+          alt="purple"
+          data-color="purple"
+        >
+        <img
+          src="https://picsum.photos/50"
+          alt="green"
+          data-color="green"
+        >
+        <img
+          src="https://picsum.photos/50"
+          alt="blue"
+          data-color="blue"
+        >
+      </div>
+      <button id="name-btn">Play</button>
+    </form>
+  </main>
 
-  <script src="app.js"></script>
 </body>
 
 </html>

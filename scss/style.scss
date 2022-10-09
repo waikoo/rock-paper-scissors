@@ -1,5 +1,45 @@
+/* lexend-regular - latin */
+@font-face {
+	font-family: 'Lexend';
+	font-style: normal;
+	font-weight: 400;
+	src: local(''), url('../fonts/lexend-v17-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('../fonts/lexend-v17-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* lexend-700 - latin */
+@font-face {
+	font-family: 'Lexend';
+	font-style: normal;
+	font-weight: 700;
+	src: local(''), url('../fonts/lexend-v17-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('../fonts/lexend-v17-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* lexend-900 - latin */
+@font-face {
+	font-family: 'Lexend';
+	font-style: normal;
+	font-weight: 900;
+	src: local(''), url('../fonts/lexend-v17-latin-900.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */ url('../fonts/lexend-v17-latin-900.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+// Lovelo Line Bold
+@font-face {
+	font-family: 'Lovelo';
+	src: url('../fonts/Lovelo\ Line\ Bold.otf');
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
 $bg: #141412;
 $green: #72e6a6;
+$name-placeholder: #b0b0b0;
+$name-input-bg: #bff3d6;
+$name-label-inner-shadow: #386c50;
+$name-border: 7px solid $green;
+
+$ff-other: 'Lexend', sans-serif;
+$ff: 'Lovelo', serif;
 
 .visible {
 	display: block;
@@ -9,14 +49,128 @@ $green: #72e6a6;
 	display: none;
 }
 
+header {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 0.2rem;
+	font-size: 2.187rem;
+}
+
+header span {
+	color: $green;
+	font-family: $ff;
+	display: block;
+}
+
+#paper,
+#scissors {
+	display: none;
+}
+
 .name-btn {
 	display: block;
 }
 
-dialog {
-	display: block;
+html {
+	height: 100%;
 }
 
-dialog::backdrop {
-	background: rgba(0, 0, 0, 0.236);
+body {
+	padding: 0;
+	margin: 0;
+	background: $bg;
+	height: 100%;
+	// background: red;
+}
+
+main {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+// name-input
+.input-form {
+	display: flex;
+	flex-direction: column;
+	// align-items: center;
+	// width: 40px;
+	text-align: center;
+	border: $name-border;
+	font-family: $ff-other;
+	width: 413px;
+	height: 350px;
+}
+
+.name-input-text {
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	row-gap: 2rem;
+}
+
+.input-label {
+	text-transform: capitalize;
+	color: $bg;
+	background: $green;
+	display: block;
+	padding: 2rem 1rem;
+	border-bottom: $name-border;
+	box-shadow: inset 0 0 5px 3px $name-label-inner-shadow;
+	font-size: 1.5rem;
+	font-weight: 800;
+	font-size: 2rem;
+	// width: 100%;
+}
+
+#name {
+	border: none;
+	padding: 1rem;
+	font-size: 1rem;
+	background: $name-input-bg;
+	box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, 0.46);
+	display: block;
+	height: 45px;
+	margin: 0 auto;
+	text-align: center;
+	font-weight: 700;
+	font-size: 1.875rem;
+	width: 65%;
+	text-transform: uppercase;
+}
+
+#name::placeholder {
+	text-align: center;
+	font-family: $ff-other;
+	color: $name-placeholder;
+	font-weight: 700;
+	font-size: 1.875rem;
+}
+
+.name-question {
+	background: $green;
+	text-transform: capitalize;
+}
+
+small {
+	color: $green;
+	font-size: 1rem;
+	font-weight: 700;
+}
+
+#name-btn {
+	display: block;
+	background: $green;
+	border: none;
+	margin: 0 auto;
+	font-size: 1.2rem;
+	padding: 0.2rem 2rem;
+	cursor: pointer;
+	font-weight: 800;
+	font-size: 1.625rem;
+	font-family: $ff-other;
 }

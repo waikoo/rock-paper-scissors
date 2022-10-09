@@ -147,13 +147,25 @@ const player = {
 	color: null
 };
 
+$('#form-color').style.display = 'none';
+
 function handleNameSubmission(e) {
 	e.preventDefault();
-	player.name = formatName($('#name').value);
+	player.name = getName();
+	$('#form-name').style.display = 'none';
+	$('#form-color').classList.remove('invisible');
+	$('#paper').style.display = 'block';
+	$('#form-color').style.display = 'block';
+	console.log(player.name);
 	// player.name = $('#name').value.trim();
+	// $('#form-name').classList.add('invisible');
+	// $('#form-name').className = 'invisible';
+	// console.log($('#form-name').classList);
+}
 
-	$('#form-name').classList.toggle('invisible');
-	$('#form-color').classList.toggle('invisible');
+function getName(name = 'PLAYER') {
+	const playerName = $('#name').value;
+	return playerName ? formatName(playerName) : name;
 }
 
 function formatName(name) {
@@ -184,10 +196,13 @@ function selectColor(color = 'red') {
 	// default color is red if start is pressed and there's no color
 	// otherwise it's what the player selects, handled by handleColorSelection()
 	player.color = color;
-	$('#form-color').classList.toggle('invisible');
+	$('#form-color').style.display = 'none';
+	// TODO: mukodik ugy h meg se kell nyomni a handleColorSelectiont triggerelo gombot
 }
 
 $('#form-name').addEventListener('submit', handleNameSubmission);
 $('#form-color').addEventListener('submit', handleColorSubmission);
 
 colors.forEach(color => color.addEventListener('click', handleColorSelection));
+
+// TODO: make fn to select color randomly for player & computer

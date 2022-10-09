@@ -24,31 +24,44 @@
 </head>
 
 <body>
+  <header>
+    <span id="rock">ROCK</span>
+    <span id="paper">PAPER</span>
+    <span id="scissors">SCISSORS</span>
+  </header>
   <main>
     <!-- ! get name -->
-    <form id="form-name">
+    <form
+      id="form-name"
+      class="input-form"
+    >
       <label
         for="name"
-        class="name-question"
+        class="input-label"
       >Enter your name</label>
-      <input
-        type="text"
-        name="name"
-        id="name"
-        maxlength="8"
-      >
-      <small>Maximum 8 Characters</small>
-      <button id="name-btn">Next</button>
+      <div class="name-input-text">
+        <div class="input-small-con">
+          <input
+            type="text"
+            name="name"
+            id="name"
+            maxlength="8"
+            placeholder="PLAYER"
+          >
+          <small>Maximum 8 Characters</small>
+        </div>
+        <button id="name-btn">Next</button>
+      </div>
     </form>
 
     <!-- ! get color -->
     <form
       id="form-color"
-      class="invisible"
+      class="input-form invisible"
     >
       <label
         for="name"
-        class="name-question"
+        class="input-label"
       >Choose Your Color</label>
       <div class="color-con">
         <img

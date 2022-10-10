@@ -60,9 +60,9 @@ header span {
 	text-shadow: 0px 0px 8px $green;
 }
 
-// header span:hover {
-// 	text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px $green, 0 0 42px $green, 0 0 82px $green, 0 0 92px $green, 0 0 102px $green;
-// }
+.logo-hover {
+	text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px $green, 0 0 42px $green, 0 0 82px $green, 0 0 92px $green, 0 0 102px $green;
+}
 
 #paper,
 #scissors {
@@ -257,8 +257,6 @@ small {
 	display: flex;
 	justify-content: space-evenly;
 	min-width: 95%;
-	// padding-top: 2rem;
-	background: rgba(0, 0, 0, 0.46);
 }
 
 // \\ // \\ // \\ // \\ // \\ // \\ block
@@ -287,7 +285,7 @@ small {
 	list-style: none;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
+	justify-content: space-between;
 	height: 100%;
 }
 
@@ -297,11 +295,16 @@ small {
 	width: 100%;
 	display: flex;
 	place-content: center;
-	padding-bottom: 1rem;
+	padding-bottom: 1.5rem;
 }
 
 .items:nth-last-of-type() {
-	padding-bottom: 0;
+	padding-bottom: 0.5rem;
+}
+
+.computer-history-item-5 {
+	padding-bottom: 0.5rem;
+	border-bottom: 0;
 }
 
 // \\ // \\ // \\ // \\ // \\ // \\ mid
@@ -325,6 +328,10 @@ small {
 	flex-direction: column;
 	justify-content: space-around;
 	gap: 2rem;
+}
+
+.rps-el {
+	cursor: pointer;
 }
 
 // \\ // \\ // \\ // \\ // \\ // \\ score

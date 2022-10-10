@@ -17,65 +17,76 @@ function getComputerChoice() {
 			throw new Error("Computer couldn't make a choice");
 	}
 }
-function incrementScoreFor(aPlayer) {
+function incrementScoreFor(aPlayer, player) {
+	// let { computerScoreValue, playerScoreValue } = player;
+	const playerScore = $('.player-score');
+	const computerScore = $('.computer-score');
+	console.dir(playerScore);
+	console.dir(computerScore);
+
 	switch (aPlayer) {
 		case 'computer':
-			// computerScoreValue++;
-			// computerScore.textContent = computerScoreValue;
+			player.computerScoreValue++;
+			computerScore.textContent = player.computerScoreValue;
 			break;
+
 		case 'player':
-			// playerScoreValue++;
-			// playerScore.textContent = playerScoreValue;
+			player.playerScoreValue++;
+			playerScore.textContent = player.playerScoreValue;
 			break;
 
 		default:
-			// computerScoreValue++;
-			// playerScoreValue++;
-			// computerScore.textContent = computerScoreValue;
-			// playerScore.textContent = playerScoreValue;
+			player.computerScoreValue++;
+			player.playerScoreValue++;
+
+			computerScore.textContent = player.computerScoreValue;
+			playerScore.textContent = player.playerScoreValue;
 			break;
 	}
 }
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection, computerSelection, player) {
 	let playerChoice;
 	try {
 		playerChoice = playerSelection.toLowerCase().trim();
 	} catch (err) {
 		console.log(err);
 	}
+	console.log('playerSelection: ' + playerSelection);
+
+	console.log('computerSelection: ' + computerSelection);
 
 	if (playerChoice === 'rock') {
 		if (computerSelection === 'paper') {
-			incrementScoreFor('computer');
-			return 'You lose!';
+			incrementScoreFor('computer', player);
+			// return 'You lose!';
 		} else if (computerSelection === 'scissors') {
-			incrementScoreFor('player');
-			return 'You win!';
-		} else if (computerSelection === 'rock') {
-			incrementScoreFor();
-			return 'Draw!';
+			incrementScoreFor('player', player);
+			// return 'You win!';
+		} else if ((computerSelection === 'rock', player)) {
+			incrementScoreFor('both', player);
+			// return 'Draw!';
 		}
 	} else if (playerChoice === 'paper') {
 		if (computerSelection === 'paper') {
-			incrementScoreFor();
-			return 'Draw!';
+			incrementScoreFor('both', player);
+			// return 'Draw!';
 		} else if (computerSelection === 'scissors') {
-			incrementScoreFor('computer');
-			return 'You lose!';
+			incrementScoreFor('computer', player);
+			// return 'You lose!';
 		} else if (computerSelection === 'rock') {
-			incrementScoreFor('player');
-			return 'You win!';
+			incrementScoreFor('player', player);
+			// return 'You win!';
 		}
 	} else if (playerChoice === 'scissors') {
 		if (computerSelection === 'paper') {
-			incrementScoreFor('player');
-			return 'You win!';
+			incrementScoreFor('player', player);
+			// return 'You win!';
 		} else if (computerSelection === 'scissors') {
-			incrementScoreFor();
-			return 'Draw!';
+			incrementScoreFor('both', player);
+			// return 'Draw!';
 		} else if (computerSelection === 'rock') {
-			incrementScoreFor('computer');
-			return 'You lose!';
+			incrementScoreFor('computer', player);
+			// return 'You lose!';
 		}
 	} else {
 		try {
@@ -86,15 +97,21 @@ function playRound(playerSelection, computerSelection) {
 		}
 	}
 }
-function clickHandler({ target: { classList } }) {
-	if (classList.contains('rock')) {
-		playOutcome.textContent = playRound('rock', getComputerChoice());
+
+// ? playOutcome is not defined ln 105
+function clickHandler(e) {
+	console.log(e.target);
+	if (e.target.classList.contains('rock-img')) {
+		playRound('rock', getComputerChoice(), player);
+		// console.log('playoutcome textcontent: ' + playOutcome.textContent);
 	}
-	if (classList.contains('paper')) {
-		playOutcome.textContent = playRound('paper', getComputerChoice());
+	if (e.target.classList.contains('paper-img')) {
+		playRound('paper', getComputerChoice(), player);
+		// console.log('playoutcome textcontent: ' + playOutcome.textContent);
 	}
-	if (classList.contains('scissors')) {
-		playOutcome.textContent = playRound('scissors', getComputerChoice());
+	if (e.target.classList.contains('scissors-img')) {
+		playRound('scissors', getComputerChoice(), player);
+		// console.log('playoutcome textcontent: ' + playOutcome.textContent);
 	}
 }
 function checkEndGame() {
@@ -136,15 +153,17 @@ function checkEndGame() {
 	}
 }
 
-// rockBtn.addEventListener('click', clickHandler);
-// paperBtn.addEventListener('click', clickHandler);
-// scissorsBtn.addEventListener('click', clickHandler);
+const rockEl = $('.rock-img');
+const paperEl = $('.paper-img');
+const scissorsEl = $('.scissors-img');
 
 const colors = [...$('.color-con').children];
 
 const player = {
 	name: null,
-	color: null
+	color: null,
+	computerScoreValue: 0,
+	playerScoreValue: 0
 };
 
 // $('#form-color').style.display = 'none';
@@ -157,7 +176,6 @@ function handleNameSubmission(e) {
 	$('#form-color').classList.remove('invisible');
 	$('#paper').style.display = 'block';
 	$('#form-color').style.display = 'block';
-	console.log(player.name);
 	// player.name = $('#name').value.trim();
 	// $('#form-name').classList.add('invisible');
 	// $('#form-name').className = 'invisible';
@@ -181,7 +199,6 @@ function handleColorSubmission(e) {
 	!player.color ? selectColor() : ($('#form-color').style.display = 'none');
 	$('#scissors').style.display = 'block';
 	$('main').style.display = 'none';
-	console.log(player.color);
 }
 
 function handleColorSelection(e) {
@@ -204,23 +221,57 @@ function selectColor(color = 'red') {
 function handleRefresh() {
 	location.reload();
 }
-function handleLogoGlow() {
-	$$('.refresh').forEach(span => (span.style.textShadow = '0 0 7px #fff, 0 0 10px #fff, 0 0 21px #72e6a6, 0 0 42px #72e6a6, 0 0 82px #72e6a6, 0 0 92px #72e6a6, 0 0 102px #72e6a6'));
-	console.log('mouseover registered');
+function addLogoGlow(e) {
+	const rps = [...$('.refresh').children];
+
+	if (e.currentTarget === $('.refresh')) {
+		$('#rock').classList.add('logo-hover');
+		$('#paper').classList.add('logo-hover');
+		$('#scissors').classList.add('logo-hover');
+	}
+
+	// if (e.target === $('.refresh')) {
+	// 	// console.log(el);
+	// 	rps.forEach(el => {
+	// 		// el.style.textShadow = textShadowValue;
+	// 		el.classList.add('logo-hover');
+	// 		el.addEventListener('mouseleave', () => {
+	// 			el.classList.remove('logo-hover');
+	// 		});
+	// 	});
+	// }
+}
+function removeLogoGlow(e) {
+	const rps = [...$('.refresh').children];
+	if (e.target !== $('.refresh')) {
+		$('#rock').classList.remove('logo-hover');
+		$('#paper').classList.remove('logo-hover');
+		$('#scissors').classList.remove('logo-hover');
+	}
 }
 
 $('.refresh').addEventListener('click', handleRefresh);
 $('#form-name').addEventListener('submit', handleNameSubmission);
 $('#form-color').addEventListener('submit', handleColorSubmission);
 colors.forEach(color => color.addEventListener('click', handleColorSelection));
-$('.refresh').addEventListener('mouseover', handleLogoGlow);
-// // ! invisibilize while working
+$('.refresh').addEventListener('mouseenter', addLogoGlow, true);
+$('.refresh').addEventListener('mouseleave', removeLogoGlow, true);
+
+rockEl.addEventListener('click', clickHandler);
+paperEl.addEventListener('click', clickHandler);
+scissorsEl.addEventListener('click', clickHandler);
+
 // (function () {
 // 	$('#form-name').style.display = 'none';
 // 	$('#form-color').style.display = 'none';
 // 	$('main').style.display = 'none';
 // })();
 
-console.log(window);
+/*
+rock - img;
+paper - img;
+scissors - img;
+koss ra eventlistenereket clickre
+*/
 
 // TODO: make fn to select color randomly for player & computer

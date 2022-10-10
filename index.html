@@ -25,9 +25,11 @@
 
 <body>
   <header>
-    <span id="rock">ROCK</span>
-    <span id="paper">PAPER</span>
-    <span id="scissors">SCISSORS</span>
+    <a class="refresh">
+      <span id="rock">ROCK</span>
+      <span id="paper">PAPER</span>
+      <span id="scissors">SCISSORS</span>
+    </a>
   </header>
   <main>
     <!-- ! get name -->
@@ -50,7 +52,10 @@
           >
           <small>Maximum 8 Characters</small>
         </div>
-        <button id="name-btn">Next</button>
+        <button
+          id="name-btn"
+          class="btn"
+        >Next</button>
       </div>
     </form>
 
@@ -63,36 +68,136 @@
         for="name"
         class="input-label"
       >Choose Your Color</label>
-      <div class="color-con">
-        <img
-          src="https://picsum.photos/50"
-          alt="red"
-          data-color="red"
-        >
-        <img
-          src="https://picsum.photos/50"
-          alt="yellow"
-          data-color="yellow"
-        >
-        <img
-          src="https://picsum.photos/50"
-          alt="purple"
-          data-color="purple"
-        >
-        <img
-          src="https://picsum.photos/50"
-          alt="green"
-          data-color="green"
-        >
-        <img
-          src="https://picsum.photos/50"
-          alt="blue"
-          data-color="blue"
-        >
+      <div class="color-btn-con">
+        <div class="color-con">
+          <img
+            src="images/player-color/red.png"
+            alt="red"
+            data-color="red"
+          >
+          <img
+            src="images/player-color/yellow.png"
+            alt="yellow"
+            data-color="yellow"
+          >
+          <img
+            src="images/player-color/purple.png"
+            alt="purple"
+            data-color="purple"
+          >
+          <img
+            src="images/player-color/green.png"
+            alt="green"
+            data-color="green"
+          >
+          <img
+            src="images/player-color/blue.png"
+            alt="blue"
+            data-color="blue"
+          >
+        </div>
+        <button
+          id="color-btn"
+          class="btn"
+        >Play</button>
       </div>
-      <button id="name-btn">Play</button>
     </form>
+
   </main>
+  <!-- ! main game -->
+  <div class="play-page">
+    <div class="player-block block">
+      <span class="player-name name">Evelin</span>
+      <ul class="player-history history">
+        <li class="player-history-item-1 items"><img
+            src="images/rock-paper-scissor/rock-winner.svg"
+            alt=""
+          ></li>
+        <li class="player-history-item-2 items"><img
+            src="images/rock-paper-scissor/scissors-loser.svg"
+            alt=""
+          ></li>
+        <li class="player-history-item-3 items"><img
+            src="images/rock-paper-scissor/paper-winner.svg"
+            alt=""
+          ></li>
+        <li class="player-history-item-4 items"><img
+            src="images/rock-paper-scissor/scissors-loser.svg"
+            alt=""
+          ></li>
+        <li class="player-history-item-5 items"><img
+            src="images/rock-paper-scissor/scissors-winner.svg"
+            alt=""
+          ></li>
+      </ul>
+    </div>
+
+    <!-- mid -->
+    <div class="mid-con">
+      <div class="score-con">
+        <div class="score-middle">
+          <span class="player-score score">0</span>
+          <span class="colon-score score">:</span>
+          <span class="computer-score score">0</span>
+        </div>
+      </div>
+      <div class="play-box">
+        <div class="player-rps rps">
+          <img
+            src="images/rock-paper-scissor/rock-winner.svg"
+            alt="rock"
+          >
+          <img
+            src="images/rock-paper-scissor/paper-winner.svg"
+            alt="paper"
+          >
+          <img
+            src="images/rock-paper-scissor/scissors-winner.svg"
+            alt="scissors"
+          >
+        </div>
+        <div class="computer-rps rps">
+          <img
+            src="images/rock-paper-scissor/rock-loser.svg"
+            alt="rock"
+          >
+          <img
+            src="images/rock-paper-scissor/paper-loser.svg"
+            alt="paper"
+          >
+          <img
+            src="images/rock-paper-scissor/scissors-loser.svg"
+            alt="scissors"
+          >
+        </div>
+      </div>
+    </div>
+    <div class="computer-block block">
+      <span class="computer-name name">Computer</span>
+      <ul class="computer-history history">
+        <li class="computer-history-item-1 items"><img
+            src="images/rock-paper-scissor/rock-winner.svg"
+            alt=""
+          ></li>
+        <li class="computer-history-item-2 items"><img
+            src="images/rock-paper-scissor/rock-loser.svg"
+            alt=""
+          ></li>
+        <li class="computer-history-item-3 items"><img
+            src="images/rock-paper-scissor/paper-winner.svg"
+            alt=""
+          ></li>
+        <li class="computer-history-item-4 items"><img
+            src="images/rock-paper-scissor/scissors-loser.svg"
+            alt=""
+          ></li>
+        <li class="computer-history-item-5 items"><img
+            src="images/rock-paper-scissor/rock-winner.svg"
+            alt=""
+          ></li>
+      </ul>
+    </div>
+  </div>
 
 </body>
 

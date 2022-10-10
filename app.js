@@ -147,11 +147,12 @@ const player = {
 	color: null
 };
 
-$('#form-color').style.display = 'none';
+// $('#form-color').style.display = 'none';
 
 function handleNameSubmission(e) {
 	e.preventDefault();
 	player.name = getName();
+	$('.player-name').textContent = player.name;
 	$('#form-name').style.display = 'none';
 	$('#form-color').classList.remove('invisible');
 	$('#paper').style.display = 'block';
@@ -177,7 +178,9 @@ function formatName(name) {
 
 function handleColorSubmission(e) {
 	e.preventDefault();
-	!player.color ? selectColor() : $('#form-color').classList.toggle('invisible');
+	!player.color ? selectColor() : ($('#form-color').style.display = 'none');
+	$('#scissors').style.display = 'block';
+	$('main').style.display = 'none';
 	console.log(player.color);
 }
 
@@ -196,13 +199,28 @@ function selectColor(color = 'red') {
 	// default color is red if start is pressed and there's no color
 	// otherwise it's what the player selects, handled by handleColorSelection()
 	player.color = color;
-	$('#form-color').style.display = 'none';
-	// TODO: mukodik ugy h meg se kell nyomni a handleColorSelectiont triggerelo gombot
 }
 
+function handleRefresh() {
+	location.reload();
+}
+function handleLogoGlow() {
+	$$('.refresh').forEach(span => (span.style.textShadow = '0 0 7px #fff, 0 0 10px #fff, 0 0 21px #72e6a6, 0 0 42px #72e6a6, 0 0 82px #72e6a6, 0 0 92px #72e6a6, 0 0 102px #72e6a6'));
+	console.log('mouseover registered');
+}
+
+$('.refresh').addEventListener('click', handleRefresh);
 $('#form-name').addEventListener('submit', handleNameSubmission);
 $('#form-color').addEventListener('submit', handleColorSubmission);
-
 colors.forEach(color => color.addEventListener('click', handleColorSelection));
+$('.refresh').addEventListener('mouseover', handleLogoGlow);
+// // ! invisibilize while working
+// (function () {
+// 	$('#form-name').style.display = 'none';
+// 	$('#form-color').style.display = 'none';
+// 	$('main').style.display = 'none';
+// })();
+
+console.log(window);
 
 // TODO: make fn to select color randomly for player & computer

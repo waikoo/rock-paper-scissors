@@ -37,36 +37,48 @@ $name-placeholder: #b0b0b0;
 $name-input-bg: #bff3d6;
 $name-label-inner-shadow: #386c50;
 $name-border: 7px solid $green;
+$play-history-border: 1px solid #254935;
 
 $ff-other: 'Lexend', sans-serif;
 $ff: 'Lovelo', serif;
 
-.visible {
-	display: block;
-}
-
-.invisible {
-	display: none;
-}
-
 header {
 	display: flex;
-	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	padding: 0.2rem;
 	font-size: 2.187rem;
+	border-bottom: 1px solid #72e6a6;
+
+	margin-top: 0.5rem;
 }
 
 header span {
 	color: $green;
 	font-family: $ff;
 	display: block;
+	text-shadow: 0px 0px 8px $green;
 }
+
+// header span:hover {
+// 	text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px $green, 0 0 42px $green, 0 0 82px $green, 0 0 92px $green, 0 0 102px $green;
+// }
 
 #paper,
 #scissors {
 	display: none;
+}
+
+.refresh {
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.logo:hover {
+	text-shadow: 0 0 7px #fff, 0 0 10px #fff, 0 0 21px $green, 0 0 42px $green, 0 0 82px $green, 0 0 92px $green, 0 0 102px $green;
 }
 
 .name-btn {
@@ -82,6 +94,7 @@ body {
 	margin: 0;
 	background: $bg;
 	height: 100%;
+	overflow: hidden;
 	// background: red;
 }
 
@@ -109,8 +122,17 @@ main {
 	padding: 1rem;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-evenly;
-	row-gap: 2rem;
+	justify-content: space-around;
+	height: 100%;
+	row-gap: 0.5rem;
+}
+
+.input-small-con {
+	height: 80px;
+	// background: red;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
 .input-label {
@@ -162,7 +184,7 @@ small {
 	font-weight: 700;
 }
 
-#name-btn {
+.btn {
 	display: block;
 	background: $green;
 	border: none;
@@ -173,4 +195,175 @@ small {
 	font-weight: 800;
 	font-size: 1.625rem;
 	font-family: $ff-other;
+}
+
+.btn:hover {
+	// color: $green;
+	color: white;
+	background: $bg;
+	text-shadow:
+  // 0 0 2px $green,
+		0 0 7px #fff, 0 0 10px #fff, 0 0 21px $green, 0 0 42px $green, 0 0 82px $green, 0 0 92px $green, 0 0 102px $green;
+	position: relative;
+	box-shadow: 0 0 1px 1px $green;
+}
+
+.btn:hover::before {
+	animation: clippath 3s infinite linear;
+	content: '';
+	border: 3px solid $green;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.color-btn-con {
+	padding: 2rem;
+	// background: red;
+	display: flex;
+	flex-direction: column;
+	height: 65%;
+	justify-content: space-between;
+}
+
+.color-con {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.color-con img {
+	width: 60px;
+	height: auto;
+}
+
+.color-con img:hover {
+	cursor: pointer;
+	transform: scale(1.15);
+	transition: all 0.3s ease-in-out;
+}
+
+// play-page
+
+.name,
+.score-middle {
+	box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.46);
+	padding: 0 1rem;
+}
+
+.play-page {
+	display: flex;
+	justify-content: space-evenly;
+	min-width: 95%;
+	// padding-top: 2rem;
+	background: rgba(0, 0, 0, 0.46);
+}
+
+// \\ // \\ // \\ // \\ // \\ // \\ block
+.block {
+	display: flex;
+	flex-direction: column;
+	border: 5px solid $green;
+	width: 20%;
+	margin-top: 2rem;
+}
+.name {
+	color: $bg;
+	background: $green;
+	font-family: $ff-other;
+	font-weight: 600;
+	text-transform: uppercase;
+	text-align: center;
+	font-size: 3.037rem;
+	width: 100%;
+	padding: 1rem 0;
+	border-bottom: $name-border;
+}
+
+.history {
+	padding-left: 0;
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	height: 100%;
+}
+
+.items {
+	margin: 0 auto;
+	border-bottom: $play-history-border;
+	width: 100%;
+	display: flex;
+	place-content: center;
+	padding-bottom: 1rem;
+}
+
+.items:nth-last-of-type() {
+	padding-bottom: 0;
+}
+
+// \\ // \\ // \\ // \\ // \\ // \\ mid
+.mid-con {
+	width: 50%;
+}
+
+.play-box {
+	display: flex;
+	justify-content: space-between;
+	border: 3px solid $green;
+	padding: 2rem 3rem;
+}
+
+.play-box img {
+	width: 150px;
+}
+
+.rps {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	gap: 2rem;
+}
+
+// \\ // \\ // \\ // \\ // \\ // \\ score
+.score {
+	font-size: 5.625rem;
+}
+
+.score-con {
+	display: flex;
+	justify-content: center;
+}
+
+.score-middle {
+	background: $green;
+	font-family: $ff-other;
+	font-weight: 800;
+	border: 7px solid $green;
+}
+
+@keyframes clippath {
+	0%,
+	100% {
+		clip-path: inset(0 0 95% 0);
+	}
+	25% {
+		clip-path: inset(0 95% 0 0);
+	}
+	50% {
+		clip-path: inset(95% 0 0 0);
+	}
+	75% {
+		clip-path: inset(0 0 0 95%);
+	}
+}
+
+.visible {
+	display: block;
+}
+
+.invisible {
+	display: none;
 }

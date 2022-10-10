@@ -1,117 +1,69 @@
 import { $, $$ } from './utils/selectors.js';
 
 function getComputerChoice() {
-	let randomAnswer = Math.floor(Math.random() * 3) + 1;
+	let randomNumber = Math.floor(Math.random() * 3) + 1;
 
-	switch (randomAnswer) {
+	switch (randomNumber) {
 		case 1:
 			return 'rock';
-
 		case 2:
 			return 'paper';
-
-		case 3:
+		default:
 			return 'scissors';
-
-		default:
-			throw new Error("Computer couldn't make a choice");
 	}
 }
-function incrementScoreFor(aPlayer, player) {
-	// let { computerScoreValue, playerScoreValue } = player;
-	const playerScore = $('.player-score');
-	const computerScore = $('.computer-score');
-	console.dir(playerScore);
-	console.dir(computerScore);
 
-	switch (aPlayer) {
-		case 'computer':
-			player.computerScoreValue++;
-			computerScore.textContent = player.computerScoreValue;
-			break;
-
-		case 'player':
-			player.playerScoreValue++;
-			playerScore.textContent = player.playerScoreValue;
-			break;
-
-		default:
-			player.computerScoreValue++;
-			player.playerScoreValue++;
-
-			computerScore.textContent = player.computerScoreValue;
-			playerScore.textContent = player.playerScoreValue;
-			break;
+function incrementScoreFor(aPlayer = 'both') {
+	if (aPlayer === 'both') {
+		incrementScoreFor('computer');
+		incrementScoreFor('player');
+	} else {
+		game[`${aPlayer}ScoreValue`] += 1;
+		$(`.${aPlayer}-score`).textContent = game[`${aPlayer}ScoreValue`];
 	}
 }
-function playRound(playerSelection, computerSelection, player) {
-	let playerChoice;
-	try {
-		playerChoice = playerSelection.toLowerCase().trim();
-	} catch (err) {
-		console.log(err);
-	}
-	console.log('playerSelection: ' + playerSelection);
 
-	console.log('computerSelection: ' + computerSelection);
-
-	if (playerChoice === 'rock') {
+// ? map my functions to object values representing
+function playRound(playerSelection, computerSelection) {
+	if (playerSelection === 'rock') {
 		if (computerSelection === 'paper') {
-			incrementScoreFor('computer', player);
-			// return 'You lose!';
+			incrementScoreFor('computer');
 		} else if (computerSelection === 'scissors') {
-			incrementScoreFor('player', player);
-			// return 'You win!';
-		} else if ((computerSelection === 'rock', player)) {
-			incrementScoreFor('both', player);
-			// return 'Draw!';
-		}
-	} else if (playerChoice === 'paper') {
-		if (computerSelection === 'paper') {
-			incrementScoreFor('both', player);
-			// return 'Draw!';
-		} else if (computerSelection === 'scissors') {
-			incrementScoreFor('computer', player);
-			// return 'You lose!';
+			incrementScoreFor('player');
 		} else if (computerSelection === 'rock') {
-			incrementScoreFor('player', player);
-			// return 'You win!';
+			incrementScoreFor();
 		}
-	} else if (playerChoice === 'scissors') {
+	} else if (playerSelection === 'paper') {
 		if (computerSelection === 'paper') {
-			incrementScoreFor('player', player);
-			// return 'You win!';
+			incrementScoreFor();
 		} else if (computerSelection === 'scissors') {
-			incrementScoreFor('both', player);
-			// return 'Draw!';
+			incrementScoreFor('computer');
 		} else if (computerSelection === 'rock') {
-			incrementScoreFor('computer', player);
-			// return 'You lose!';
+			incrementScoreFor('player');
+		}
+	} else if (playerSelection === 'scissors') {
+		if (computerSelection === 'paper') {
+			incrementScoreFor('player');
+		} else if (computerSelection === 'scissors') {
+			incrementScoreFor();
+		} else if (computerSelection === 'rock') {
+			incrementScoreFor('computer');
 		}
 	} else {
-		try {
-			return `"${playerChoice.trim()}" isn't Rock, nor Paper, nor Scissors from what I can tell. Try again.`;
-		} catch (err) {
-			console.log(err);
-			console.log('no value to trim');
-		}
+		throw new Error('Choose rock, paper, or scissors');
 	}
 }
 
 // ? playOutcome is not defined ln 105
-function clickHandler(e) {
-	console.log(e.target);
+function handleRPS(e) {
 	if (e.target.classList.contains('rock-img')) {
-		playRound('rock', getComputerChoice(), player);
-		// console.log('playoutcome textcontent: ' + playOutcome.textContent);
+		playRound('rock', getComputerChoice());
 	}
 	if (e.target.classList.contains('paper-img')) {
-		playRound('paper', getComputerChoice(), player);
-		// console.log('playoutcome textcontent: ' + playOutcome.textContent);
+		playRound('paper', getComputerChoice());
 	}
 	if (e.target.classList.contains('scissors-img')) {
-		playRound('scissors', getComputerChoice(), player);
-		// console.log('playoutcome textcontent: ' + playOutcome.textContent);
+		playRound('scissors', getComputerChoice());
 	}
 }
 function checkEndGame() {
@@ -159,7 +111,7 @@ const scissorsEl = $('.scissors-img');
 
 const colors = [...$('.color-con').children];
 
-const player = {
+const game = {
 	name: null,
 	color: null,
 	computerScoreValue: 0,
@@ -170,8 +122,8 @@ const player = {
 
 function handleNameSubmission(e) {
 	e.preventDefault();
-	player.name = getName();
-	$('.player-name').textContent = player.name;
+	game.name = getName();
+	$('.player-name').textContent = game.name;
 	$('#form-name').style.display = 'none';
 	$('#form-color').classList.remove('invisible');
 	$('#paper').style.display = 'block';
@@ -196,7 +148,7 @@ function formatName(name) {
 
 function handleColorSubmission(e) {
 	e.preventDefault();
-	!player.color ? selectColor() : ($('#form-color').style.display = 'none');
+	!game.color ? selectColor() : ($('#form-color').style.display = 'none');
 	$('#scissors').style.display = 'block';
 	$('main').style.display = 'none';
 }
@@ -215,7 +167,7 @@ function handleColorSelection(e) {
 function selectColor(color = 'red') {
 	// default color is red if start is pressed and there's no color
 	// otherwise it's what the player selects, handled by handleColorSelection()
-	player.color = color;
+	game.color = color;
 }
 
 function handleRefresh() {
@@ -257,9 +209,9 @@ colors.forEach(color => color.addEventListener('click', handleColorSelection));
 $('.refresh').addEventListener('mouseenter', addLogoGlow, true);
 $('.refresh').addEventListener('mouseleave', removeLogoGlow, true);
 
-rockEl.addEventListener('click', clickHandler);
-paperEl.addEventListener('click', clickHandler);
-scissorsEl.addEventListener('click', clickHandler);
+rockEl.addEventListener('click', handleRPS);
+paperEl.addEventListener('click', handleRPS);
+scissorsEl.addEventListener('click', handleRPS);
 
 // (function () {
 // 	$('#form-name').style.display = 'none';

@@ -1,16 +1,16 @@
 import { $, $$ } from './utils/selectors.js';
 
-function getComputerChoice() {
-	let randomNumber = Math.floor(Math.random() * 3) + 1;
+function getRandomNumberUntil(number) {
+	return Math.floor(Math.random() * number) + 1;
+}
 
-	switch (randomNumber) {
-		case 1:
-			return 'rock';
-		case 2:
-			return 'paper';
-		default:
-			return 'scissors';
-	}
+function getComputerChoice() {
+	const numberToChoiceObj = {
+		1: 'rock',
+		2: 'paper',
+		3: 'scissors'
+	};
+	return numberToChoiceObj[`${getRandomNumberUntil(3)}`];
 }
 
 function incrementScoreFor(aPlayer = 'both') {
@@ -54,7 +54,6 @@ function playRound(playerSelection, computerSelection) {
 	}
 }
 
-// ? playOutcome is not defined ln 105
 function handleRPS(e) {
 	if (e.target.classList.contains('rock-img')) {
 		playRound('rock', getComputerChoice());

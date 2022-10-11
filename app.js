@@ -20,36 +20,28 @@ function incrementScoreFor(aPlayer = 'both') {
 		$(`.${aPlayer}-score`).textContent = game[`${aPlayer}ScoreValue`];
 	}
 }
-function playRoundWithIf(playerChose, computerChose) {
-	if (playerChose === 'rock' && computerChose === 'paper') incrementScoreFor('computer');
-	if (playerChose === 'rock' && computerChose === 'scissors') incrementScoreFor('player');
-	if (playerChose === 'rock' && computerChose === 'rock') incrementScoreFor();
 
-	if (playerChose === 'paper' && computerChose === 'paper') incrementScoreFor();
-	if (playerChose === 'paper' && computerChose === 'scissors') incrementScoreFor('computer');
-	if (playerChose === 'paper' && computerChose === 'rock') incrementScoreFor('player');
+function Round(playerChoice) {
+	this.playerChoice = playerChoice;
+	this.computerChoice = getComputerChoice();
 
-	if (playerChose === 'scissors' && computerChose === 'paper') incrementScoreFor('player');
-	if (playerChose === 'scissors' && computerChose === 'scissors') incrementScoreFor();
-	if (playerChose === 'scissors' && computerChose === 'rock') incrementScoreFor('computer');
+	this.play = function () {
+		if (this.playerChoice === 'rock') this.computerChoice === 'paper' ? incrementScoreFor('computer') : this.computerChoice === 'scissors' ? incrementScoreFor('player') : incrementScoreFor();
+		if (this.playerChoice === 'paper') this.computerChoice === 'scissors' ? incrementScoreFor('computer') : this.computerChoice === 'rock' ? incrementScoreFor('player') : incrementScoreFor();
+		if (this.playerChoice === 'scissors') this.computerChoice === 'paper' ? incrementScoreFor('player') : this.computerChoice === 'rock' ? incrementScoreFor('computer') : incrementScoreFor();
+	};
 }
+
 function handleRPS({
 	target: {
 		dataset: { playerChoice }
 	}
 }) {
-	playRoundWithIf(playerChoice, getComputerChoice());
-	// if (playerChoice ==='rock') {
-	// 	playRoundWithMap('rock', getComputerChoice());
-	// }
-	// if (playerChoice ==='paper') {
-	// 	playRoundWithMap('paper', getComputerChoice());
-	// }
-	// if (playerChoice ==='scissors') {
-	// 	playRoundWithMap('scissors', getComputerChoice());
-	// }
+	new Round(playerChoice).play();
 }
+
 function checkEndGame() {
+	// playRoundWithIf(playerChoice, getComputerChoice());
 	console.log('endGame ran');
 	if (playerScore.textContent === '5') {
 		playOutcome.textContent = 'Congratulations! You won!';
@@ -113,18 +105,6 @@ function handleNameSubmission(e) {
 	// $('#form-name').classList.add('invisible');
 	// $('#form-name').className = 'invisible';
 	// console.log($('#form-name').classList);
-}
-
-function getName(name = 'PLAYER') {
-	const playerName = $('#name').value;
-	return playerName ? formatName(playerName) : name;
-}
-
-function formatName(name) {
-	const isNameCapitalized = /[A-Z]/g.test(name.trim().charAt(0));
-	const alreadyCapitalizedName = name.charAt(0) + name.slice(1).toLowerCase();
-	const newlyCapitalizedName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-	return isNameCapitalized ? alreadyCapitalizedName : newlyCapitalizedName;
 }
 
 function handleColorSubmission(e) {

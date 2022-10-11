@@ -3,7 +3,6 @@ import { $, $$ } from './utils/selectors.js';
 function getRandomNumberUntil(number) {
 	return Math.floor(Math.random() * number) + 1;
 }
-
 function getComputerChoice() {
 	const numberToChoiceObj = {
 		1: 'rock',
@@ -12,7 +11,6 @@ function getComputerChoice() {
 	};
 	return numberToChoiceObj[`${getRandomNumberUntil(3)}`];
 }
-
 function incrementScoreFor(aPlayer = 'both') {
 	if (aPlayer === 'both') {
 		incrementScoreFor('computer');
@@ -22,48 +20,34 @@ function incrementScoreFor(aPlayer = 'both') {
 		$(`.${aPlayer}-score`).textContent = game[`${aPlayer}ScoreValue`];
 	}
 }
+function playRoundWithIf(playerChose, computerChose) {
+	if (playerChose === 'rock' && computerChose === 'paper') incrementScoreFor('computer');
+	if (playerChose === 'rock' && computerChose === 'scissors') incrementScoreFor('player');
+	if (playerChose === 'rock' && computerChose === 'rock') incrementScoreFor();
 
-// ? map my functions to object values representing
-function playRound(playerSelection, computerSelection) {
-	if (playerSelection === 'rock') {
-		if (computerSelection === 'paper') {
-			incrementScoreFor('computer');
-		} else if (computerSelection === 'scissors') {
-			incrementScoreFor('player');
-		} else if (computerSelection === 'rock') {
-			incrementScoreFor();
-		}
-	} else if (playerSelection === 'paper') {
-		if (computerSelection === 'paper') {
-			incrementScoreFor();
-		} else if (computerSelection === 'scissors') {
-			incrementScoreFor('computer');
-		} else if (computerSelection === 'rock') {
-			incrementScoreFor('player');
-		}
-	} else if (playerSelection === 'scissors') {
-		if (computerSelection === 'paper') {
-			incrementScoreFor('player');
-		} else if (computerSelection === 'scissors') {
-			incrementScoreFor();
-		} else if (computerSelection === 'rock') {
-			incrementScoreFor('computer');
-		}
-	} else {
-		throw new Error('Choose rock, paper, or scissors');
-	}
+	if (playerChose === 'paper' && computerChose === 'paper') incrementScoreFor();
+	if (playerChose === 'paper' && computerChose === 'scissors') incrementScoreFor('computer');
+	if (playerChose === 'paper' && computerChose === 'rock') incrementScoreFor('player');
+
+	if (playerChose === 'scissors' && computerChose === 'paper') incrementScoreFor('player');
+	if (playerChose === 'scissors' && computerChose === 'scissors') incrementScoreFor();
+	if (playerChose === 'scissors' && computerChose === 'rock') incrementScoreFor('computer');
 }
-
-function handleRPS(e) {
-	if (e.target.classList.contains('rock-img')) {
-		playRound('rock', getComputerChoice());
+function handleRPS({
+	target: {
+		dataset: { playerChoice }
 	}
-	if (e.target.classList.contains('paper-img')) {
-		playRound('paper', getComputerChoice());
-	}
-	if (e.target.classList.contains('scissors-img')) {
-		playRound('scissors', getComputerChoice());
-	}
+}) {
+	playRoundWithIf(playerChoice, getComputerChoice());
+	// if (playerChoice ==='rock') {
+	// 	playRoundWithMap('rock', getComputerChoice());
+	// }
+	// if (playerChoice ==='paper') {
+	// 	playRoundWithMap('paper', getComputerChoice());
+	// }
+	// if (playerChoice ==='scissors') {
+	// 	playRoundWithMap('scissors', getComputerChoice());
+	// }
 }
 function checkEndGame() {
 	console.log('endGame ran');
@@ -116,8 +100,6 @@ const game = {
 	computerScoreValue: 0,
 	playerScoreValue: 0
 };
-
-// $('#form-color').style.display = 'none';
 
 function handleNameSubmission(e) {
 	e.preventDefault();
@@ -211,18 +193,5 @@ $('.refresh').addEventListener('mouseleave', removeLogoGlow, true);
 rockEl.addEventListener('click', handleRPS);
 paperEl.addEventListener('click', handleRPS);
 scissorsEl.addEventListener('click', handleRPS);
-
-// (function () {
-// 	$('#form-name').style.display = 'none';
-// 	$('#form-color').style.display = 'none';
-// 	$('main').style.display = 'none';
-// })();
-
-/*
-rock - img;
-paper - img;
-scissors - img;
-koss ra eventlistenereket clickre
-*/
 
 // TODO: make fn to select color randomly for player & computer

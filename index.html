@@ -26,16 +26,34 @@
 <body>
   <header>
     <a class="refresh">
-      <span id="rock">ROCK</span>
-      <span id="paper">PAPER</span>
-      <span id="scissors">SCISSORS</span>
+      <span
+        class="unlit rps-animation"
+        id="rock"
+      >ROCK</span>
+      <span
+        class="unlit"
+        id="paper"
+      >PAPER</span>
+      <span
+        class="unlit"
+        id="scissors"
+      >SCISSORS</span>
     </a>
   </header>
   <main>
+    <!-- ! endgame settings -->
+    <div class="endgame-settings invisible">
+      <label class="input-label endgame-message">YOU WIN</label>
+      <div class="button-con">
+        <button class="play-again btn endgame-btn">Play Again</button>
+        <button class="change-name btn endgame-btn">Choose Name</button>
+        <button class="change-color btn endgame-btn">Choose Color</button>
+      </div>
+    </div>
     <!-- ! get name -->
     <form
       id="form-name"
-      class="input-form"
+      class="input-form come-in"
     >
       <label
         for="name"
@@ -49,6 +67,7 @@
             id="name"
             maxlength="8"
             placeholder="PLAYER"
+            spellcheck="false"
           >
           <small>Maximum 8 Characters</small>
         </div>
@@ -62,7 +81,7 @@
     <!-- ! get color -->
     <form
       id="form-color"
-      class="input-form invisible"
+      class="input-form invisible come-in"
     >
       <label
         for="name"
@@ -103,32 +122,18 @@
       </div>
     </form>
 
+
   </main>
   <!-- ! main game -->
-  <div class="play-page">
+  <div class="play-page invisible">
     <div class="player-block block">
       <span class="player-name name">Evelin</span>
       <ul class="player-history history">
-        <li class="player-history-item-1 items"><img
-            src="images/rock-paper-scissor/rock-winner.svg"
-            alt=""
-          ></li>
-        <li class="player-history-item-2 items"><img
-            src="images/rock-paper-scissor/scissors-loser.svg"
-            alt=""
-          ></li>
-        <li class="player-history-item-3 items"><img
-            src="images/rock-paper-scissor/paper-winner.svg"
-            alt=""
-          ></li>
-        <li class="player-history-item-4 items"><img
-            src="images/rock-paper-scissor/scissors-loser.svg"
-            alt=""
-          ></li>
-        <li class="player-history-item-5 items"><img
-            src="images/rock-paper-scissor/scissors-winner.svg"
-            alt=""
-          ></li>
+        <li class="player-history-item-1 items"><img alt="" /></li>
+        <li class="player-history-item-2 items"><img alt="" /></li>
+        <li class="player-history-item-3 items"><img alt="" /></li>
+        <li class="player-history-item-4 items"><img alt="" /></li>
+        <li class="player-history-item-5 items"><img alt="" /></li>
       </ul>
     </div>
 
@@ -146,33 +151,30 @@
           <img
             data-player-choice="rock"
             class="rps-el rock-img"
-            src="images/rock-paper-scissor/rock-winner.svg"
             alt="rock"
           >
           <img
             data-player-choice="paper"
             class="rps-el paper-img"
-            src="images/rock-paper-scissor/paper-winner.svg"
             alt="paper"
           >
           <img
             data-player-choice="scissors"
             class="rps-el scissors-img"
-            src="images/rock-paper-scissor/scissors-winner.svg"
             alt="scissors"
           >
         </div>
         <div class="computer-rps rps">
           <img
-            src="images/rock-paper-scissor/rock-loser.svg"
+            class="computer-rock computer-rps-el"
             alt="rock"
           >
           <img
-            src="images/rock-paper-scissor/paper-loser.svg"
+            class="computer-paper computer-rps-el"
             alt="paper"
           >
           <img
-            src="images/rock-paper-scissor/scissors-loser.svg"
+            class="computer-scissors computer-rps-el"
             alt="scissors"
           >
         </div>
@@ -181,30 +183,14 @@
     <div class="computer-block block">
       <span class="computer-name name">Computer</span>
       <ul class="computer-history history">
-        <li class="computer-history-item-1 items"><img
-            src="images/rock-paper-scissor/rock-winner.svg"
-            alt=""
-          ></li>
-        <li class="computer-history-item-2 items"><img
-            src="images/rock-paper-scissor/rock-loser.svg"
-            alt=""
-          ></li>
-        <li class="computer-history-item-3 items"><img
-            src="images/rock-paper-scissor/paper-winner.svg"
-            alt=""
-          ></li>
-        <li class="computer-history-item-4 items"><img
-            src="images/rock-paper-scissor/scissors-loser.svg"
-            alt=""
-          ></li>
-        <li class="computer-history-item-5 items"><img
-            src="images/rock-paper-scissor/rock-winner.svg"
-            alt=""
-          ></li>
+        <li class="computer-history-item-1 items"><img alt="" /></li>
+        <li class="computer-history-item-2 items"><img alt="" /></li>
+        <li class="computer-history-item-3 items"><img alt="" /></li>
+        <li class="computer-history-item-4 items"><img alt="" /></li>
+        <li class="computer-history-item-5 items"><img alt="" /></li>
       </ul>
     </div>
   </div>
-
 </body>
 
 </html>

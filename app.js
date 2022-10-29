@@ -123,17 +123,21 @@ function lightenPlayArea() {
 function endGameUI() {
 	darkenPlayArea();
 	$('.endgame-con').style.display = 'flex';
-  // animateEndgame('in')
-  $('.endgame-settings').style.animation = `100ms come-in forwards`
-  // $('.endgame-settings').style.animation = `100ms come-${inOrOut} forwards`
+	// animateEndgame('in')
+	$('.endgame-settings').style.animation = `100ms come-in forwards`;
+	// $('.endgame-settings').style.animation = `100ms come-${inOrOut} forwards`
 }
 function displayWinner() {
 	const playerScore = Number($('.player-score').textContent);
 	const computerScore = Number($('.computer-score').textContent);
-	let scoreboard = $('.endgame-message').textContent;
 
-	playerScore > computerScore ? (scoreboard = 'YOU WIN') : (scoreboard = 'YOU LOSE');
-	if (playerScore === computerScore) scoreboard = "IT'S A TIE";
+	if (playerScore === computerScore) {
+		$('.endgame-message').textContent = "IT'S A TIE";
+	} else if (playerScore > computerScore) {
+		$('.endgame-message').textContent = 'YOU WIN';
+	} else {
+		$('.endgame-message').textContent = 'YOU LOSE';
+	}
 }
 function createEndgameContainer() {
 	const endgameCon = document.createElement('div');
@@ -146,10 +150,10 @@ function showSettings() {
 	if (!$('.play-page').contains($('.endgame-con'))) createEndgameContainer();
 	$('.endgame-con').removeAttribute('style');
 	makeVisible($('.endgame-settings'));
-  // console.log($('.endgame-settings').style.animation)
-  animateEndgame('in')
-  // setTimeout(() => $('.endgame-settings').removeAttribute('style'), 100)
-  // removeAttribute?
+	// console.log($('.endgame-settings').style.animation)
+	animateEndgame('in');
+	// setTimeout(() => $('.endgame-settings').removeAttribute('style'), 100)
+	// removeAttribute?
 	displayWinner();
 	endGameUI();
 }
@@ -404,13 +408,13 @@ function generateNameChangeHTML() {
 }
 
 function handleChangeName() {
-  animateEndgame('out')
-  setTimeout(() => {
-    makeInvisible($('main'));
-    makeInvisible($('.endgame-settings'));
-    $('.endgame-con').style.display = 'none';
-    $('.endgame-settings').style.animation = '';
-  }, 100)
+	animateEndgame('out');
+	setTimeout(() => {
+		makeInvisible($('main'));
+		makeInvisible($('.endgame-settings'));
+		$('.endgame-con').style.display = 'none';
+		$('.endgame-settings').style.animation = '';
+	}, 100);
 
 	if (!checkParent($('.play-page'), $('.change-name-con'))) {
 		generateNameChangeHTML();
@@ -422,17 +426,17 @@ function handleChangeName() {
 	if ($('.play-page').lastChild !== $('.change-name-con')) {
 		$('.play-page').append($('.change-name-con'));
 	}
-  animateChange('in', 'name')
-  animateEndgame('out')
+	animateChange('in', 'name');
+	animateEndgame('out');
 }
 
 function handleChangeColor() {
-  animateEndgame('out')
-  setTimeout(() => {
-    makeInvisible($('main'));
-    makeInvisible($('.endgame-settings'));
-    $('.endgame-con').style.display = 'none';
-  })
+	animateEndgame('out');
+	setTimeout(() => {
+		makeInvisible($('main'));
+		makeInvisible($('.endgame-settings'));
+		$('.endgame-con').style.display = 'none';
+	});
 
 	game.isColorChanged = true;
 
@@ -448,7 +452,7 @@ function handleChangeColor() {
 	});
 
 	loadColoredRPS();
-  animateChange('in', 'name')
+	animateChange('in', 'name');
 }
 
 function checkParent(parent, child) {
@@ -534,18 +538,18 @@ function handleGoBack(e) {
 	game.isColorChanged = false;
 
 	if (checkParent($('.play-page'), $('.change-name-con'))) {
-    animateChange('out', 'name')
-    animateEndgame('in-left')
-    // ($('.change-name-con').style.display = 'none')
-  }
-  if (checkParent($('.play-page'), $('.change-color-con'))) {
-    ($('.change-color-con').style.display = 'none');
-  } 
+		animateChange('out', 'name');
+		animateEndgame('in-left');
+		// ($('.change-name-con').style.display = 'none')
+	}
+	if (checkParent($('.play-page'), $('.change-color-con'))) {
+		$('.change-color-con').style.display = 'none';
+	}
 
-  setTimeout(() => { 
-    handleGoBackUI();
-  }, 100)
-  // animateEndgame('in', 'reverse')
+	setTimeout(() => {
+		handleGoBackUI();
+	}, 100);
+	// animateEndgame('in', 'reverse')
 }
 
 function handleGoBackUI() {
@@ -553,13 +557,13 @@ function handleGoBackUI() {
 	$('.endgame-con').style.display = 'flex';
 
 	makeVisible($('.endgame-settings')); // no work
-  $('.endgame-settings').style.animation = '';
+	$('.endgame-settings').style.animation = '';
 	$('.endgame-settings').style.display = 'block';
-  $('.change-name-con').style.animation = '100ms come-in-left forwards 1'
-  // $('.endgame-settings').style.animation = '100ms come-in-left forwards 1'
-  setTimeout(() => {
-    $('.change-name-con').style.display = 'none'
-  }, 100)
+	$('.change-name-con').style.animation = '100ms come-in-left forwards 1';
+	// $('.endgame-settings').style.animation = '100ms come-in-left forwards 1'
+	setTimeout(() => {
+		$('.change-name-con').style.display = 'none';
+	}, 100);
 }
 
 function animate(inOrOut, nameOrColor) {
@@ -569,25 +573,24 @@ function animate(inOrOut, nameOrColor) {
 }
 
 function animateChange(inOrOut, nameOrColor) {
-  console.log('goback triggered name to go right')
+	console.log('goback triggered name to go right');
 	let con = $(`.change-${nameOrColor}-con`);
 	if (inOrOut === 'in') {
-    con.style.animation = '100ms come-in none';
-    $('.change-name-con').style.animation = '100ms go-out none'
-  }
+		con.style.animation = '100ms come-in none';
+		$('.change-name-con').style.animation = '100ms go-out none';
+	}
 	if (inOrOut === 'out') con.style.animation = '100ms go-out none 1';
 }
 
 function animateEndgame(inOrOut) {
-  // const endgame = $('.endgame-settings').style
-  // inOrOut === 'in'
-  //         ? endgame.animation = `100ms come-in ${reverse} 1`
-	 //        : endgame.animation = `100ms go-out ${reverse} 1`;
-  if (inOrOut === 'out') $('.endgame-settings').style.animation = `100ms go-out none 1`
-  if (inOrOut === 'in') $('.endgame-settings').style.animation = `100ms come-in none 1`
-  if (inOrOut === 'in-left') {
-    $('.endgame-settings').style.animation = `100ms come-in-left none 1`
-  }
-  console.log()
+	// const endgame = $('.endgame-settings').style
+	// inOrOut === 'in'
+	//         ? endgame.animation = `100ms come-in ${reverse} 1`
+	//        : endgame.animation = `100ms go-out ${reverse} 1`;
+	if (inOrOut === 'out') $('.endgame-settings').style.animation = `100ms go-out none 1`;
+	if (inOrOut === 'in') $('.endgame-settings').style.animation = `100ms come-in none 1`;
+	if (inOrOut === 'in-left') {
+		$('.endgame-settings').style.animation = `100ms come-in-left none 1`;
+	}
+	console.log();
 }
-

@@ -32,3 +32,7 @@ export function lightenPlayArea() {
 	$('.mid-con').classList.remove('low-opacity');
 	$$('.block').forEach(item => item.classList.remove('low-opacity'));
 }
+
+export function handleRefresh() {
+	location.reload();
+}

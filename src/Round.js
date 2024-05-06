@@ -1,9 +1,16 @@
 import getRandomNumberUntil from './utils/randomNumberGenerator.js';
 import { $, $$ } from './utils/selectors.js';
-import { incrementScoreFor } from '../app.js';
 import { makeInvisible, makeVisible } from './ui/toggleUIDisplay.js';
 import { animateEndgame } from './ui/main.js';
 import { darkenPlayArea } from './ui/main.js';
+
+export function handleRPS({
+	target: {
+		dataset: { playerChoice }
+	}
+}, game) {
+	new Round(playerChoice).play(game);
+}
 
 function getComputerChoice() {
 	const numberToChoiceObj = {
@@ -55,6 +62,16 @@ function createEndgameContainer() {
 	$('.play-page').append(endgameCon);
 }
 
+export function incrementScoreFor(game, aPlayer = 'both') {
+	if (aPlayer === 'both') {
+		incrementScoreFor(game, 'computer');
+		incrementScoreFor(game, 'player');
+	} else {
+		game[`${aPlayer}ScoreValue`] += 1;
+		$(`.${aPlayer}-score`).textContent = game[`${aPlayer}ScoreValue`];
+	}
+}
+
 export default function Round(playerChoice) {
 	this.playerChoice = playerChoice;
 	this.computerChoice = getComputerChoice();
@@ -63,21 +80,21 @@ export default function Round(playerChoice) {
 	this.play = function (game) {
 		// ! rock
 		if (this.playerChoice === 'rock' && this.computerChoice === 'paper') {
-			incrementScoreFor('computer');
+			incrementScoreFor(game, 'computer');
 			this.showWinner('computer', 'paper', game);
 			this.showLoser('player', 'rock', game);
 			game.round++;
 			if (game.round === 6) showSettings();
 		}
 		if (this.playerChoice === 'rock' && this.computerChoice === 'scissors') {
-			incrementScoreFor('player');
+			incrementScoreFor(game, 'player');
 			this.showWinner('player', 'rock', game);
 			this.showLoser('computer', 'scissors', game);
 			game.round++;
 			if (game.round === 6) showSettings();
 		}
 		if (this.playerChoice === 'rock' && this.computerChoice === 'rock') {
-			incrementScoreFor();
+			incrementScoreFor(game);
 			this.showWinner('computer', 'rock', game);
 			this.showWinner('player', 'rock', game);
 			game.round++;
@@ -85,21 +102,21 @@ export default function Round(playerChoice) {
 		}
 		// ! paper
 		if (this.playerChoice === 'paper' && this.computerChoice === 'scissors') {
-			incrementScoreFor('computer');
+			incrementScoreFor(game, 'computer');
 			this.showWinner('computer', 'scissors', game);
 			this.showLoser('player', 'paper', game);
 			game.round++;
 			if (game.round === 6) showSettings();
 		}
 		if (this.playerChoice === 'paper' && this.computerChoice === 'rock') {
-			incrementScoreFor('player');
+			incrementScoreFor(game, 'player');
 			this.showWinner('player', 'paper', game);
 			this.showLoser('computer', 'rock', game);
 			game.round++;
 			if (game.round === 6) showSettings();
 		}
 		if (this.playerChoice === 'paper' && this.computerChoice === 'paper') {
-			incrementScoreFor();
+			incrementScoreFor(game);
 			this.showWinner('computer', 'paper', game);
 			this.showWinner('player', 'paper', game);
 			game.round++;
@@ -107,21 +124,21 @@ export default function Round(playerChoice) {
 		}
 		// ! scissors
 		if (this.playerChoice === 'scissors' && this.computerChoice === 'paper') {
-			incrementScoreFor('player');
+			incrementScoreFor(game, 'player');
 			this.showWinner('player', 'scissors', game);
 			this.showLoser('computer', 'paper', game);
 			game.round++;
 			if (game.round === 6) showSettings();
 		}
 		if (this.playerChoice === 'scissors' && this.computerChoice === 'rock') {
-			incrementScoreFor('computer');
+			incrementScoreFor(game, 'computer');
 			this.showWinner('computer', 'rock', game);
 			this.showLoser('player', 'scissors', game);
 			game.round++;
 			if (game.round === 6) showSettings();
 		}
 		if (this.playerChoice === 'scissors' && this.computerChoice === 'scissors') {
-			incrementScoreFor();
+			incrementScoreFor(game);
 			this.showWinner('computer', 'scissors', game);
 			this.showWinner('player', 'scissors', game);
 			game.round++;

@@ -1,5 +1,4 @@
 import { $, $$ } from './src/utils/selectors.js';
-import Round from './src/Round.js';
 import { handleNameSubmission } from './src/settings/handleName.js';
 import { addLogoGlow, removeLogoGlow } from './src/ui/logo.js';
 import { handleColorSubmission } from './src/settings/handleColor.js';
@@ -7,19 +6,8 @@ import {handleColorSelection} from './src/settings/handleColor.js'
 import { handlePlayAgain } from './src/ui/reset.js';
 import { handleChangeColor, handleChangeName } from './src/ui/reset.js';
 import { handleGoBack } from './src/ui/reset.js';
-
-function handleRPS({
-	target: {
-		dataset: { playerChoice }
-	}
-}, game) {
-	new Round(playerChoice).play(game);
-}
-
-function handleRefresh() {
-	location.reload();
-}
-
+import { handleRefresh } from './src/ui/main.js';
+import { handleRPS } from './src/Round.js';
 
 const game = {
 	name: null,
@@ -31,16 +19,6 @@ const game = {
 	isFirstGame: true,
 	isColorChanged: false
 };
-
-export function incrementScoreFor(aPlayer = 'both') {
-	if (aPlayer === 'both') {
-		incrementScoreFor('computer');
-		incrementScoreFor('player');
-	} else {
-		game[`${aPlayer}ScoreValue`] += 1;
-		$(`.${aPlayer}-score`).textContent = game[`${aPlayer}ScoreValue`];
-	}
-}
 
 $('.refresh').addEventListener('click', handleRefresh);
 $('#form-name').addEventListener('submit', function(e) {

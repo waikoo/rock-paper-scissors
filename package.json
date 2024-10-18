@@ -1,12 +1,12 @@
 {
   "name": "rock-paper-scissors",
   "version": "1.0.0",
-  "description": "",
+  "description": "A browser-based rock, paper, scissors game",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "live-server",
-    "sass": "node-sass -w scss/style.scss css/style.css"
+    "sass": "sass -w scss/style.scss css/style.css"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,10 @@
   "homepage": "https://github.com/waikoo/rock-paper-scissors#readme",
   "dependencies": {
     "node-sass": "^7.0.3"
+  },
+  "packageManager": "pnpm@9.12.1+sha512.e5a7e52a4183a02d5931057f7a0dbff9d5e9ce3161e33fa68ae392125b79282a8a8a470a51dfc8a0ed86221442eb2fb57019b0990ed24fab519bf0e1bc5ccfc4",
+  "devDependencies": {
+    "sass": "^1.80.2",
+    "typescript": "^5.6.3"
   }
 }

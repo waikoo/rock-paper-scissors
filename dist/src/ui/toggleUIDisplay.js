@@ -1,9 +1,7 @@
 function makeInvisible(element) {
-	element.classList.add('invisible');
+    element.classList.add('invisible');
 }
-
 function makeVisible(element) {
-	element.classList.remove('invisible');
+    element.classList.remove('invisible');
 }
-
 export { makeInvisible, makeVisible };

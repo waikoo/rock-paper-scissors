@@ -3,42 +3,19 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta
-    http-equiv="X-UA-Compatible"
-    content="IE=edge"
-  />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-  <script
-    src="app.js"
-    type="module"
-    defer
-  ></script>
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="css/style.css"
-  />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="dist/app.js" type="module" defer></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
   <title>Rock, Paper, Scissors</title>
 </head>
 
 <body>
   <header>
     <a class="refresh">
-      <span
-        class="unlit rps-animation"
-        id="rock"
-      >ROCK</span>
-      <span
-        class="unlit"
-        id="paper"
-      >PAPER</span>
-      <span
-        class="unlit"
-        id="scissors"
-      >SCISSORS</span>
+      <span class="unlit rps-animation" id="rock">ROCK</span>
+      <span class="unlit" id="paper">PAPER</span>
+      <span class="unlit" id="scissors">SCISSORS</span>
     </a>
   </header>
   <main>
@@ -52,79 +29,29 @@
       </div>
     </div>
     <!-- ! get name -->
-    <form
-      id="form-name"
-      class="input-form"
-    >
-      <label
-        for="name"
-        class="input-label"
-      >Enter your name</label>
+    <form id="form-name" class="input-form">
+      <label for="name" class="input-label">Enter your name</label>
       <div class="name-input-text">
         <div class="input-small-con">
-          <input
-            type="text"
-            name="name"
-            id="name"
-            maxlength="8"
-            placeholder="PLAYER"
-            spellcheck="false"
-          >
+          <input type="text" name="name" id="name" maxlength="8" placeholder="PLAYER" spellcheck="false">
           <small>Maximum 8 Characters</small>
         </div>
-        <button
-          id="name-btn"
-          class="btn"
-        >Next</button>
+        <button id="name-btn" class="btn">Next</button>
       </div>
     </form>
 
     <!-- ! get color -->
-    <form
-      id="form-color"
-      class="input-form invisible"
-    >
-      <label
-        for="name"
-        class="input-label"
-      >Choose Your Color</label>
+    <form id="form-color" class="input-form invisible">
+      <label for="name" class="input-label">Choose Your Color</label>
       <div class="color-btn-con">
         <div class="color-con">
-          <img
-            src="images/player-color/red.png"
-            alt="red"
-            data-color="red"
-            class="color-item-first"
-          >
-          <img
-            src="images/player-color/yellow.png"
-            alt="yellow"
-            data-color="yellow"
-            class="color-item-first"
-          >
-          <img
-            src="images/player-color/purple.png"
-            alt="purple"
-            data-color="purple"
-            class="color-item-first"
-          >
-          <img
-            src="images/player-color/green.png"
-            alt="green"
-            data-color="green"
-            class="color-item-first"
-          >
-          <img
-            src="images/player-color/blue.png"
-            alt="blue"
-            data-color="blue"
-            class="color-item-first"
-          >
+          <img src="images/player-color/red.png" alt="red" data-color="red" class="color-item-first">
+          <img src="images/player-color/yellow.png" alt="yellow" data-color="yellow" class="color-item-first">
+          <img src="images/player-color/purple.png" alt="purple" data-color="purple" class="color-item-first">
+          <img src="images/player-color/green.png" alt="green" data-color="green" class="color-item-first">
+          <img src="images/player-color/blue.png" alt="blue" data-color="blue" class="color-item-first">
         </div>
-        <button
-          id="color-btn"
-          class="btn"
-        >Play</button>
+        <button id="color-btn" class="btn">Play</button>
       </div>
     </form>
 
@@ -154,35 +81,14 @@
       </div>
       <div class="play-box">
         <div class="player-rps rps">
-          <img
-            data-player-choice="rock"
-            class="rps-el rock-img"
-            alt="rock"
-          >
-          <img
-            data-player-choice="paper"
-            class="rps-el paper-img"
-            alt="paper"
-          >
-          <img
-            data-player-choice="scissors"
-            class="rps-el scissors-img"
-            alt="scissors"
-          >
+          <img data-player-choice="rock" class="rps-el rock-img" alt="rock">
+          <img data-player-choice="paper" class="rps-el paper-img" alt="paper">
+          <img data-player-choice="scissors" class="rps-el scissors-img" alt="scissors">
         </div>
         <div class="computer-rps rps">
-          <img
-            class="computer-rock computer-rps-el"
-            alt="rock"
-          >
-          <img
-            class="computer-paper computer-rps-el"
-            alt="paper"
-          >
-          <img
-            class="computer-scissors computer-rps-el"
-            alt="scissors"
-          >
+          <img class="computer-rock computer-rps-el" alt="rock">
+          <img class="computer-paper computer-rps-el" alt="paper">
+          <img class="computer-scissors computer-rps-el" alt="scissors">
         </div>
       </div>
     </div>

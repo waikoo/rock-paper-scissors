@@ -1,5 +1,8 @@
 import { $, $$ } from "./selectors.js";
 export default class UI {
+    constructor() {
+        this.utils = new Utils();
+    }
     animate(inOrOut, nameOrColor) {
         let form = $(`#form-${nameOrColor}`);
         if (inOrOut === 'in')
@@ -35,12 +38,13 @@ export default class UI {
             con.style.animation = '100ms go-out none 1';
     }
     animateEndgame(inOrOut) {
+        const endgameEl = $('.endgame-con');
         if (inOrOut === 'out')
-            $('.endgame-settings').style.animation = `100ms go-out none 1`;
+            endgameEl.style.animation = `100ms go-out none 1`;
         if (inOrOut === 'in')
-            $('.endgame-settings').style.animation = `100ms come-in none 1`;
+            endgameEl.style.animation = `100ms come-in none 1`;
         if (inOrOut === 'in-left') {
-            $('.endgame-settings').style.animation = `100ms come-in-left none 1`;
+            endgameEl.style.animation = `100ms come-in-left none 1`;
         }
     }
     showWinner(player, rps, game) {
@@ -50,4 +54,14 @@ export default class UI {
         $(`.${player}-history-item-${game.round} img`).setAttribute('src', `./images/rock-paper-scissor/${rps}-loser.svg`);
     }
     ;
+    updateTextContent(element, text) {
+        element.textContent = text;
+    }
+    resetHistory() {
+        for (let n = 1; n < 6; n++) {
+            $(`.player-history-item-${n} img`).removeAttribute('src');
+            $(`.computer-history-item-${n} img`).removeAttribute('src');
+        }
+    }
 }
+import Utils from "./Utils.js";

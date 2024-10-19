@@ -19,6 +19,7 @@ logoEl.addEventListener('click', logo.handleRefresh);
 logoEl.addEventListener('mouseenter', logo.handleAddGlow, true);
 logoEl.addEventListener('mouseleave', logo.handleRemoveGlow, true);
 const menu = new Menu();
+const gameController = new GameController();
 $('#form-name').addEventListener('submit', function (e) {
     menu.handleInitialNameSubmission(e, game);
 });
@@ -29,12 +30,12 @@ $$('.color-item-first').forEach(color => color.addEventListener('click', functio
     menu.handleColorSelection(e, game);
 }));
 $$('.rps-el').forEach(rpsEl => rpsEl.addEventListener('click', function (e) {
-    new GameController().handleStartNewGame(e, game);
+    gameController.handleStartNewGame(e, game);
 }));
 $('.play-again').addEventListener('click', function (e) {
-    menu.handlePlayAgain(e, game);
+    gameController.handlePlayAgain(e, game);
 });
-$('.change-name').addEventListener('click', () => menu.handleChangeName(game));
+$('.change-name').addEventListener('click', () => gameController.handleChangeName(game));
 $('.change-color').addEventListener('click', function () {
-    menu.handleChangeColor(game);
+    gameController.handleChangeColor(game);
 });

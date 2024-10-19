@@ -19,8 +19,7 @@ export default class Menu {
             this.ui.animate('in', 'color');
         }, 100);
     }
-    loadColoredRPS(game) {
-        // TODO: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! TO REFACTOR
+    setPlayerColors(game) {
         if (game.playerColor) {
             game.computerColor = this.utils.getRandomColor();
         }
@@ -30,8 +29,9 @@ export default class Menu {
         // make sure computer and player colors are different
         if (!game.computerColor)
             game.computerColor = this.utils.getRandomColor();
-        while (game.playerColor === game.computerColor)
+        while (game.playerColor === game.computerColor) {
             game.computerColor = this.utils.getRandomColor();
+        }
         $('.computer-rock').src = `./images/colored/rock-${game.computerColor}.png`;
         $('.computer-paper').src = `./images/colored/paper-${game.computerColor}.png`;
         $('.computer-scissors').src = `./images/colored/scissors-${game.computerColor}.png`;
@@ -57,7 +57,7 @@ export default class Menu {
     handleColorSubmission(e, game) {
         e.preventDefault();
         this.ui.animate('out', 'color');
-        this.loadColoredRPS(game);
+        this.setPlayerColors(game);
         this.logo.lightUp('scissors');
         setTimeout(() => {
             this.ui.makeVisible($('.play-page'));
@@ -70,29 +70,11 @@ export default class Menu {
             $('#form-color').style.zIndex = '-100';
         }, 3000);
     }
-    resetPlayerName(game) {
-        let newName = $('#name-change').value;
-        game.name = newName ? newName : 'PLAYER';
-        $('.player-name').textContent = game.name;
-    }
     resetPlayerColor() {
         this.ui.makeInvisible($('.change-color-con'));
         $('.change-color-con').style.display = 'none';
     }
-    getNewComputerColor(game) {
-        const oldColor = game.computerColor;
-        let newColor = this.utils.getRandomColor();
-        while (newColor === oldColor) {
-            newColor = this.utils.getRandomColor();
-        }
-        game.computerColor = newColor;
-    }
-    resetComputerColor(game) {
-        this.getNewComputerColor(game);
-        this.loadColoredRPS(game);
-    }
     resetParts() {
-        // $('.play-page').classList.remove('play-page-end');
         document.body.classList.remove('body-end');
         $('main').classList.remove('main-end');
         $('.endgame-settings').classList.remove('endgame-settings-end');
@@ -107,165 +89,12 @@ export default class Menu {
         this.ui.makeInvisible($('.endgame-con'));
         $('.endgame-con').style.zIndex = '-5';
     }
-    resetScore(game) {
-        $('.player-score').textContent = '0';
-        $('.computer-score').textContent = '0';
-        game.playerScoreValue = 0;
-        game.computerScoreValue = 0;
-        game.round = 1;
-    }
-    resetHistory() {
-        for (let n = 1; n < 6; n++) {
-            $(`.player-history-item-${n} img`).removeAttribute('src');
-            $(`.computer-history-item-${n} img`).removeAttribute('src');
-        }
-    }
-    resetUI(game) {
-        this.resetParts();
-        this.resetScore(game);
-        this.resetHistory();
-        this.resetComputerColor(game);
-    }
-    handlePlayAgain(e, game) {
-        e.preventDefault();
-        if (e.target === $('.play-btn-name'))
-            this.resetPlayerName(game);
-        if (e.target === $('.play-btn-color'))
-            this.resetPlayerColor();
-        game.isFirstGame = false;
-        this.resetUI(game);
-    }
-    handleChangeName(game) {
-        this.ui.animateEndgame('out');
-        setTimeout(() => {
-            this.ui.makeInvisible($('main'));
-            this.ui.makeInvisible($('.endgame-settings'));
-            $('.endgame-con').style.display = 'none';
-            $('.endgame-settings').style.animation = '';
-        }, 100);
-        if (!this.utils.checkParent($('.play-page'), $('.change-name-con'))) {
-            this.generateNameChangeHTML(game);
-        }
-        else {
-            $('.change-name-con').style.display = 'flex';
-            this.ui.makeVisible($('.change-name-con'));
-        }
-        if ($('.play-page').lastChild !== $('.change-name-con')) {
-            $('.play-page').append($('.change-name-con'));
-        }
-        this.ui.animateChange('in', 'name');
-        this.ui.animateEndgame('out');
-    }
-    generateNameChangeHTML(game) {
-        const nameDiv = document.createElement('div');
-        nameDiv.className = 'change-name-con';
-        $('.play-page').append(nameDiv);
-        nameDiv.innerHTML = /*html*/ `
-  <form
-    class="input-form"
-  >
-    <label
-      for="name-change"
-      class="input-label"
-    >Enter your name
-    </label>
-    <div class="name-input-text">
-      <div class="input-small-con">
-        <input
-          type="text"
-          name="name-change"
-          id="name-change"
-          maxlength="8"
-          placeholder="PLAYER"
-          spellcheck="false"
-        >
-        <small>Maximum 8 Characters</small>
-      </div>
-      <div class="change-btn-con">
-        <button class="back-btn-name btn">Back</button>
-        <button
-          class="btn play-btn-name">
-          Play
-        </button>
-      </div>
-    </div>
-  </form>`;
-        $('.back-btn-name').addEventListener('click', (e) => {
-            this.handleGoBack(e, game);
-        });
-        $('.play-btn-name').addEventListener('click', (e) => {
-            this.handlePlayAgain(e, game);
-        });
-    }
-    generateColorChangeHTML(game) {
-        const nameDiv = document.createElement('div');
-        nameDiv.className = 'change-color-con';
-        $('.play-page').append(nameDiv);
-        nameDiv.innerHTML = /*html*/ `
-  <form
-      id="color-change"
-      class="input-form"
-    >
-      <label
-        for="color"
-        class="input-label"
-      >Choose Your Color</label>
-      <div class="color-btn-con">
-        <div class="color-con">
-          <img
-            src="images/player-color/red.png"
-            alt="red"
-            data-color="red"
-            class="change-color-item"
-          >
-          <img
-            src="images/player-color/yellow.png"
-            alt="yellow"
-            data-color="yellow"
-            class="change-color-item"
-          >
-          <img
-            src="images/player-color/purple.png"
-            alt="purple"
-            data-color="purple"
-            class="change-color-item"
-          >
-          <img
-            src="images/player-color/green.png"
-            alt="green"
-            data-color="green"
-            class="change-color-item"
-          >
-          <img
-            src="images/player-color/blue.png"
-            alt="blue"
-            data-color="blue"
-            class="change-color-item"
-          >
-        </div>
-        <div class="change-btn-con">
-          <button class="back-btn-color btn">Back</button>
-          <button
-            id="color-btn"
-            class="btn play-btn-color"
-          >Play</button>
-      </div>
-    </form>
-  `;
-        $('.back-btn-color').addEventListener('click', (e) => {
-            this.handleGoBack(e, game);
-        });
-        $('.play-btn-color').addEventListener('click', (e) => {
-            this.handlePlayAgain(e, game);
-        });
-    }
     handleGoBack(e, game) {
         e.preventDefault();
         game.isColorChanged = false;
         if (this.utils.checkParent($('.play-page'), $('.change-name-con'))) {
             this.ui.animateChange('out', 'name');
             this.ui.animateEndgame('in-left');
-            // ($('.change-name-con').style.display = 'none')
         }
         if (this.utils.checkParent($('.play-page'), $('.change-color-con'))) {
             $('.change-color-con').style.display = 'none';
@@ -273,57 +102,17 @@ export default class Menu {
         setTimeout(() => {
             this.handleGoBackUI();
         }, 100);
-        // animateEndgame('in', 'reverse')
     }
     handleGoBackUI() {
         this.ui.makeVisible($('.endgame-con'));
         $('.endgame-con').style.display = 'flex';
-        this.ui.makeVisible($('.endgame-settings')); // no work
+        this.ui.makeVisible($('.endgame-settings'));
         $('.endgame-settings').style.animation = '';
         $('.endgame-settings').style.display = 'block';
         $('.change-name-con').style.animation = '100ms come-in-left forwards 1';
-        // $('.endgame-settings').style.animation = '100ms come-in-left forwards 1'
         setTimeout(() => {
             $('.change-name-con').style.display = 'none';
         }, 100);
-    }
-    duplicateHandleColorSelection(e, game) {
-        $$('.change-color-item').forEach(color => {
-            if (color === e.target) {
-                color.classList.add('selected');
-                const target = e.target;
-                if (target.dataset.color) {
-                    game.playerColor = target.dataset.color;
-                }
-                game.computerColor = this.utils.getRandomColor();
-            }
-            else {
-                color.classList.remove('selected');
-            }
-        });
-    }
-    handleChangeColor(game) {
-        this.ui.animateEndgame('out');
-        setTimeout(() => {
-            this.ui.makeInvisible($('main'));
-            this.ui.makeInvisible($('.endgame-settings'));
-            $('.endgame-con').style.display = 'none';
-        });
-        game.isColorChanged = true;
-        if (!this.utils.checkParent($('.play-page'), $('.change-color-con'))) {
-            this.generateColorChangeHTML(game);
-        }
-        else {
-            $('.change-color-con').style.display = 'flex';
-            this.ui.makeVisible($('.change-color-con'));
-        }
-        [...$$('.change-color-item')].forEach(item => {
-            item.addEventListener('click', (e) => {
-                this.duplicateHandleColorSelection(e, game);
-            });
-        });
-        this.loadColoredRPS(game);
-        this.ui.animateChange('in', 'name');
     }
     createEndgameContainer() {
         const endgameCon = document.createElement('div');
@@ -332,37 +121,31 @@ export default class Menu {
         $('.play-page').append(endgameCon);
     }
     showSettings() {
-        // if (game.isFirstGame) game.isFirstGame = false;
         if (!$('.play-page').contains($('.endgame-con')))
             this.createEndgameContainer();
         $('.endgame-con').removeAttribute('style');
-        // ($('.endgame-con') as HTMLElement).style.display = 'block';
         this.ui.makeVisible($('.endgame-settings'));
-        // console.log($('.endgame-settings').style.animation)
         this.ui.animateEndgame('in');
-        // setTimeout(() => $('.endgame-settings').removeAttribute('style'), 100)
-        // removeAttribute?
         this.displayWinner();
         this.endGameUI();
     }
     displayWinner() {
         const playerScore = Number($('.player-score').textContent);
         const computerScore = Number($('.computer-score').textContent);
+        const endgameMessage = $('.endgame-message');
         if (playerScore === computerScore) {
-            $('.endgame-message').textContent = "IT'S A TIE";
+            endgameMessage.textContent = "IT'S A TIE";
         }
         else if (playerScore > computerScore) {
-            $('.endgame-message').textContent = 'YOU WIN';
+            endgameMessage.textContent = 'YOU WIN';
         }
         else {
-            $('.endgame-message').textContent = 'YOU LOSE';
+            endgameMessage.textContent = 'YOU LOSE';
         }
     }
     endGameUI() {
         this.ui.darkenPlayArea();
         $('.endgame-con').style.display = 'flex';
-        // animateEndgame('in')
         $('.endgame-settings').style.animation = `100ms come-in forwards`;
-        // $('.endgame-settings').style.animation = `100ms come-${inOrOut} forwards`
     }
 }

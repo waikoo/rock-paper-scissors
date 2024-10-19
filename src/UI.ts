@@ -3,6 +3,12 @@ import { $, $$ } from "./selectors.js";
 import { InOrOut, NameOrColor } from "./types/thisOrThat.js";
 
 export default class UI {
+  private utils: Utils
+
+  constructor() {
+    this.utils = new Utils()
+  }
+
   public animate(inOrOut: InOrOut, nameOrColor: NameOrColor) {
     let form = $(`#form-${nameOrColor}`) as HTMLFormElement;
     if (inOrOut === 'in') form.style.animation = '100ms come-in none';
@@ -44,10 +50,12 @@ export default class UI {
   }
 
   public animateEndgame(inOrOut: InOrOut) {
-    if (inOrOut === 'out') ($('.endgame-settings') as HTMLElement).style.animation = `100ms go-out none 1`;
-    if (inOrOut === 'in') ($('.endgame-settings') as HTMLElement).style.animation = `100ms come-in none 1`;
+    const endgameEl = $('.endgame-con') as HTMLElement;
+
+    if (inOrOut === 'out') endgameEl.style.animation = `100ms go-out none 1`;
+    if (inOrOut === 'in') endgameEl.style.animation = `100ms come-in none 1`;
     if (inOrOut === 'in-left') {
-      ($('.endgame-settings') as HTMLElement).style.animation = `100ms come-in-left none 1`;
+      endgameEl.style.animation = `100ms come-in-left none 1`;
     }
   }
 
@@ -58,6 +66,22 @@ export default class UI {
   public showLoser(player: string, rps: RPS, game: Game): void {
     ($(`.${player}-history-item-${game.round} img`) as HTMLImageElement).setAttribute('src', `./images/rock-paper-scissor/${rps}-loser.svg`);
   };
+
+  public updateTextContent(element: HTMLElement, text: string) {
+    element.textContent = text;
+  }
+
+  public resetHistory() {
+    for (let n = 1; n < 6; n++) {
+      ($(`.player-history-item-${n} img`) as HTMLElement).removeAttribute('src');
+      ($(`.computer-history-item-${n} img`) as HTMLElement).removeAttribute('src');
+    }
+  }
+
 }
 import { RPS } from "./types/rps.js";
+
+import Utils from "./Utils.js";
+
+
 

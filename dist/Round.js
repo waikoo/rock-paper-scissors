@@ -1,11 +1,8 @@
-import GameController from './GameController.js';
-import Menu from './Menu.js';
-import UI from './UI.js';
 export class Round {
-    constructor(playerChoice) {
-        this.ui = new UI();
-        this.menu = new Menu();
-        this.gameController = new GameController();
+    constructor(playerChoice, gameController, menu, ui) {
+        this.ui = ui;
+        this.menu = menu;
+        this.gameController = gameController;
         this.playerChoice = playerChoice;
         this.computerChoice = this.gameController.getComputerChoice();
         this.round = 1;

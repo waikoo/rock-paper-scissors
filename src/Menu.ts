@@ -1,21 +1,35 @@
 import Logo from "./Logo.js";
 import { Game } from "./types/gameType.js";
 import UI from "./UI.js";
-import Utils from "./Utils.js";
-import { $, $$ } from "./selectors.js";
+import { $, $$ } from "./utils/selectors.js";
+import { checkParent, getRandomColor } from "./utils/utils.js";
 
 export default class Menu {
 
-  private utils: Utils
+  private formNameEl: HTMLFormElement
+  private formColorEl: HTMLFormElement
+  private colorItemFirstEls: NodeListOf<HTMLDivElement>
   private logo: Logo
   private ui: UI
-  constructor() {
-    this.utils = new Utils()
-    this.logo = new Logo()
+  private game: Game
+
+  constructor(formNameEl: string, formColorEl: string, colorItemFirstEls: string, logo: Logo, game: Game) {
+    this.formNameEl = $(formNameEl) as HTMLFormElement
+    this.formColorEl = $(formColorEl) as HTMLFormElement
+    this.colorItemFirstEls = $$(colorItemFirstEls) as NodeListOf<HTMLDivElement>
+    this.game = game
+    this.logo = logo
     this.ui = new UI()
+    this.attachEventListeners()
   }
 
-  public handleInitialNameSubmission(e: SubmitEvent, game: Game) {
+  private attachEventListeners() {
+    this.formNameEl.addEventListener('submit', (e) => this.handleInitialNameSubmission(e, this.game))
+    this.formColorEl.addEventListener('submit', (e) => this.handleInitialColorSubmission(e, this.game))
+    this.colorItemFirstEls.forEach(color => (color as HTMLElement).addEventListener('click', (e) => this.handleColorSelection(e, this.game)))
+  }
+
+  private handleInitialNameSubmission(e: SubmitEvent, game: Game) {
     e.preventDefault();
     this.logo.lightUp('paper');
     this.ui.animate('out', 'name');
@@ -31,15 +45,15 @@ export default class Menu {
 
   public setPlayerColors(game: Game) {
     if (game.playerColor) {
-      game.computerColor = this.utils.getRandomColor();
+      game.computerColor = getRandomColor();
     } else {
-      game.playerColor = this.utils.getRandomColor();
+      game.playerColor = getRandomColor();
     }
 
     // make sure computer and player colors are different
-    if (!game.computerColor) game.computerColor = this.utils.getRandomColor();
+    if (!game.computerColor) game.computerColor = getRandomColor();
     while (game.playerColor === game.computerColor) {
-      game.computerColor = this.utils.getRandomColor();
+      game.computerColor = getRandomColor();
     }
     ($('.computer-rock') as HTMLImageElement).src = `./images/colored/rock-${game.computerColor}.png`;
     ($('.computer-paper') as HTMLImageElement).src = `./images/colored/paper-${game.computerColor}.png`;
@@ -58,14 +72,14 @@ export default class Menu {
         if (target.dataset.color) {
           game.playerColor = target.dataset.color;
         }
-        game.computerColor = this.utils.getRandomColor();
+        game.computerColor = getRandomColor();
       } else {
         color.classList.remove('selected');
       }
     });
   }
 
-  public handleColorSubmission(e: SubmitEvent, game: Game) {
+  public handleInitialColorSubmission(e: SubmitEvent, game: Game) {
     e.preventDefault();
 
     this.ui.animate('out', 'color');
@@ -112,11 +126,11 @@ export default class Menu {
 
     game.isColorChanged = false;
 
-    if (this.utils.checkParent(($('.play-page') as HTMLElement), ($('.change-name-con') as HTMLElement))) {
+    if (checkParent(($('.play-page') as HTMLElement), ($('.change-name-con') as HTMLElement))) {
       this.ui.animateChange('out', 'name');
       this.ui.animateEndgame('in-left');
     }
-    if (this.utils.checkParent(($('.play-page') as HTMLElement), ($('.change-color-con') as HTMLElement))) {
+    if (checkParent(($('.play-page') as HTMLElement), ($('.change-color-con') as HTMLElement))) {
       ($('.change-color-con') as HTMLElement).style.display = 'none';
     }
 

@@ -1,12 +1,20 @@
-import Logo from "./Logo.js";
 import UI from "./UI.js";
-import Utils from "./Utils.js";
-import { $, $$ } from "./selectors.js";
+import { $, $$ } from "./utils/selectors.js";
+import { checkParent, getRandomColor } from "./utils/utils.js";
 export default class Menu {
-    constructor() {
-        this.utils = new Utils();
-        this.logo = new Logo();
+    constructor(formNameEl, formColorEl, colorItemFirstEls, logo, game) {
+        this.formNameEl = $(formNameEl);
+        this.formColorEl = $(formColorEl);
+        this.colorItemFirstEls = $$(colorItemFirstEls);
+        this.game = game;
+        this.logo = logo;
         this.ui = new UI();
+        this.attachEventListeners();
+    }
+    attachEventListeners() {
+        this.formNameEl.addEventListener('submit', (e) => this.handleInitialNameSubmission(e, this.game));
+        this.formColorEl.addEventListener('submit', (e) => this.handleInitialColorSubmission(e, this.game));
+        this.colorItemFirstEls.forEach(color => color.addEventListener('click', (e) => this.handleColorSelection(e, this.game)));
     }
     handleInitialNameSubmission(e, game) {
         e.preventDefault();
@@ -21,16 +29,16 @@ export default class Menu {
     }
     setPlayerColors(game) {
         if (game.playerColor) {
-            game.computerColor = this.utils.getRandomColor();
+            game.computerColor = getRandomColor();
         }
         else {
-            game.playerColor = this.utils.getRandomColor();
+            game.playerColor = getRandomColor();
         }
         // make sure computer and player colors are different
         if (!game.computerColor)
-            game.computerColor = this.utils.getRandomColor();
+            game.computerColor = getRandomColor();
         while (game.playerColor === game.computerColor) {
-            game.computerColor = this.utils.getRandomColor();
+            game.computerColor = getRandomColor();
         }
         $('.computer-rock').src = `./images/colored/rock-${game.computerColor}.png`;
         $('.computer-paper').src = `./images/colored/paper-${game.computerColor}.png`;
@@ -47,14 +55,14 @@ export default class Menu {
                 if (target.dataset.color) {
                     game.playerColor = target.dataset.color;
                 }
-                game.computerColor = this.utils.getRandomColor();
+                game.computerColor = getRandomColor();
             }
             else {
                 color.classList.remove('selected');
             }
         });
     }
-    handleColorSubmission(e, game) {
+    handleInitialColorSubmission(e, game) {
         e.preventDefault();
         this.ui.animate('out', 'color');
         this.setPlayerColors(game);
@@ -92,11 +100,11 @@ export default class Menu {
     handleGoBack(e, game) {
         e.preventDefault();
         game.isColorChanged = false;
-        if (this.utils.checkParent($('.play-page'), $('.change-name-con'))) {
+        if (checkParent($('.play-page'), $('.change-name-con'))) {
             this.ui.animateChange('out', 'name');
             this.ui.animateEndgame('in-left');
         }
-        if (this.utils.checkParent($('.play-page'), $('.change-color-con'))) {
+        if (checkParent($('.play-page'), $('.change-color-con'))) {
             $('.change-color-con').style.display = 'none';
         }
         setTimeout(() => {

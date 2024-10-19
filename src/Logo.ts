@@ -1,30 +1,43 @@
 import { RPS } from "./types/rps.js";
-import { InOrOut, NameOrColor } from "./types/thisOrThat.js";
-import { $ } from "./selectors.js";
+import { $ } from "./utils/selectors.js";
 
 export default class Logo {
-  public handleRefresh() {
+  private logoEl: HTMLAnchorElement;
+
+  constructor(logoElSelector: string) {
+    this.logoEl = $(logoElSelector) as HTMLAnchorElement
+    this.attachEventListeners()
+  }
+
+  private attachEventListeners() {
+    this.logoEl.addEventListener('click', this.handleRefresh);
+    this.logoEl.addEventListener('mouseenter', this.handleAddGlow.bind(this), true);
+    this.logoEl.addEventListener('mouseleave', this.handleRemoveGlow.bind(this), true);
+  }
+
+  private handleRefresh() {
     location.reload();
   }
 
-  public handleAddGlow(e: MouseEvent) {
-    const logoRPSChildren = [...($('.refresh') as HTMLElement).children];
+  private handleAddGlow(e: MouseEvent) {
+    const logoRPSChildren = [...this.logoEl.children];
 
-    if (e.currentTarget === $('.refresh')) {
+    if (e.currentTarget === this.logoEl) {
       logoRPSChildren.forEach(rpsEl => rpsEl.classList.add('logo-hover'));
     }
   }
-  public handleRemoveGlow(e: MouseEvent) {
-    const logoRPSChildren = [...($('.refresh') as HTMLElement).children];
+  private handleRemoveGlow(e: MouseEvent) {
+    const logoRPSChildren = [...this.logoEl.children];
 
-    if (e.target !== $('.refresh')) {
+    if (e.target !== this.logoEl) {
       logoRPSChildren.forEach(rpsEl => rpsEl.classList.remove('logo-hover'));
     }
   }
 
   public lightUp(rps: RPS) {
-    ($(`#${rps}`) as HTMLElement).classList.add('rps-animation');
-    ($(`#${rps}`) as HTMLElement).classList.remove('unlit');
+    const rpsEl = $(`#${rps}`) as HTMLElement
+    rpsEl.classList.add('rps-animation');
+    rpsEl.classList.remove('unlit');
   }
 
 }

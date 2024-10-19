@@ -1,8 +1,5 @@
-import { $, $$ } from "./selectors.js";
+import { $, $$ } from "./utils/selectors.js";
 export default class UI {
-    constructor() {
-        this.utils = new Utils();
-    }
     animate(inOrOut, nameOrColor) {
         let form = $(`#form-${nameOrColor}`);
         if (inOrOut === 'in')
@@ -64,4 +61,3 @@ export default class UI {
         }
     }
 }
-import Utils from "./Utils.js";

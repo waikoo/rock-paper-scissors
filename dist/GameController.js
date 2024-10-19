@@ -1,19 +1,34 @@
-import Menu from "./Menu.js";
 import { Round } from "./Round.js";
-import { $, $$ } from "./selectors.js";
-import UI from "./UI.js";
-import Utils from "./Utils.js";
+import { $, $$ } from "./utils/selectors.js";
+import { checkParent, getRandomColor, getRandomNumberUntil } from "./utils/utils.js";
 export default class GameController {
-    constructor() {
-        this.ui = new UI();
-        this.utils = new Utils();
-        this.menu = new Menu();
+    constructor(rpsEls, playAgainEl, changeName, changeColor, menu, ui, game) {
+        this.ui = ui;
+        this.menu = menu;
+        this.rpsEls = $$(rpsEls);
+        this.game = game;
+        this.playAgainEl = $(playAgainEl);
+        this.changeName = $(changeName);
+        this.changeColor = $(changeColor);
+        this.attachEventListeners();
+    }
+    attachEventListeners() {
+        this.rpsEls.forEach(rpsEl => rpsEl.addEventListener('click', (e) => this.handleStartNewGame(e, this.game)));
+        this.playAgainEl.addEventListener('click', (e) => {
+            this.handlePlayAgain(e, this.game);
+        });
+        this.changeName.addEventListener('click', () => {
+            this.handleChangeName(this.game);
+        });
+        this.changeColor.addEventListener('click', () => {
+            this.handleChangeColor(this.game);
+        });
     }
     handleStartNewGame(e, game) {
         if (e.target) {
             const playerChoice = e.target.dataset.playerChoice;
             if (playerChoice) {
-                new Round(playerChoice).play(game);
+                new Round(playerChoice, this, this.menu, this.ui).play(game);
             }
         }
     }
@@ -23,7 +38,7 @@ export default class GameController {
             2: 'paper',
             3: 'scissors'
         };
-        return numberToChoiceObj[this.utils.getRandomNumberUntil(3).toString()];
+        return numberToChoiceObj[getRandomNumberUntil(3).toString()];
     }
     incrementScoreFor(game, aPlayer = 'both') {
         if (!game)
@@ -49,9 +64,9 @@ export default class GameController {
     }
     getNewComputerColor(game) {
         const oldColor = game.computerColor;
-        let newColor = this.utils.getRandomColor();
+        let newColor = getRandomColor();
         while (newColor === oldColor) {
-            newColor = this.utils.getRandomColor();
+            newColor = getRandomColor();
         }
         game.computerColor = newColor;
     }
@@ -186,7 +201,7 @@ export default class GameController {
             $('.endgame-con').style.display = 'none';
             $('.endgame-settings').style.animation = '';
         }, 100);
-        if (!this.utils.checkParent($('.play-page'), $('.change-name-con'))) {
+        if (!checkParent($('.play-page'), $('.change-name-con'))) {
             this.generateNameChangeHTML(game);
         }
         else {
@@ -207,7 +222,7 @@ export default class GameController {
             $('.endgame-con').style.display = 'none';
         });
         game.isColorChanged = true;
-        if (!this.utils.checkParent($('.play-page'), $('.change-color-con'))) {
+        if (!checkParent($('.play-page'), $('.change-color-con'))) {
             this.generateColorChangeHTML(game);
         }
         else {
@@ -230,7 +245,7 @@ export default class GameController {
                 if (target.dataset.color) {
                     game.playerColor = target.dataset.color;
                 }
-                game.computerColor = this.utils.getRandomColor();
+                game.computerColor = getRandomColor();
             }
             else {
                 color.classList.remove('selected');

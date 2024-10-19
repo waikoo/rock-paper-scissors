@@ -1,13 +1,8 @@
 import { Game } from "./types/gameType.js";
-import { $, $$ } from "./selectors.js";
+import { $, $$ } from "./utils/selectors.js";
 import { InOrOut, NameOrColor } from "./types/thisOrThat.js";
 
 export default class UI {
-  private utils: Utils
-
-  constructor() {
-    this.utils = new Utils()
-  }
 
   public animate(inOrOut: InOrOut, nameOrColor: NameOrColor) {
     let form = $(`#form-${nameOrColor}`) as HTMLFormElement;
@@ -81,7 +76,6 @@ export default class UI {
 }
 import { RPS } from "./types/rps.js";
 
-import Utils from "./Utils.js";
 
 
 

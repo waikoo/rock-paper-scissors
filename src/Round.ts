@@ -12,10 +12,10 @@ export class Round {
   public menu: Menu
   public ui: UI
 
-  constructor(playerChoice: RPS) {
-    this.ui = new UI();
-    this.menu = new Menu()
-    this.gameController = new GameController()
+  constructor(playerChoice: RPS, gameController: GameController, menu: Menu, ui: UI) {
+    this.ui = ui
+    this.menu = menu
+    this.gameController = gameController
     this.playerChoice = playerChoice;
     this.computerChoice = this.gameController.getComputerChoice();
     this.round = 1;
@@ -90,5 +90,4 @@ export class Round {
       if (game.round === 6) this.menu.showSettings();
     }
   };
-
 };

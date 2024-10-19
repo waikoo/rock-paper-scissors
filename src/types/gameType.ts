@@ -1,4 +1,4 @@
-type Game = {
+export type Game = {
   name: null | string,
   playerColor: null | string,
   computerColor: null | string,

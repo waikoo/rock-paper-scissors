@@ -1,1 +1,1 @@
-type RPS = "rock" | "paper" | "scissors"
+export type RPS = "rock" | "paper" | "scissors"

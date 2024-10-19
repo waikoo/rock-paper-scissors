@@ -1,7 +1,6 @@
-function $(selector) {
+export function $(selector) {
     return document.querySelector(selector);
 }
-function $$(selector) {
+export function $$(selector) {
     return document.querySelectorAll(selector);
 }
-export { $, $$ };

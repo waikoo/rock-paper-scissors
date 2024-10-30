@@ -1,6 +1,7 @@
 import { Game } from "./types/gameType.js";
 import { $, $$ } from "./utils/selectors.js";
-import { InOrOut, NameOrColor } from "./types/thisOrThat.js";
+import { NameOrColor } from "./types/nameOrColor.js";
+import { InOrOut } from "./types/inOrOut.js";
 
 export default class UI {
 
